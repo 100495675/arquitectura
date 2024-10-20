@@ -1,12 +1,12 @@
 #include "imageaos.hpp"
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <forward_list>
-#include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <unordered_map>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 namespace imgaos {
@@ -37,6 +37,9 @@ template <typename T> void AOS::cut_freq_generic(int number) {
     freq[pixel_data[i]].first++;
     freq[pixel_data[i]].second.push_front(i);
   }
+  if (freq.size() <= static_cast<size_t>(number)) {
+    throw std::invalid_argument("Invalid cutfreq");
+  }
 
   // Ineficiente pero no hay mas, se tiene que clonar para hacer cosas
   std::vector<std::pair<pixel<T>, std::pair<size_t, std::forward_list<size_t>>>>
@@ -53,23 +56,26 @@ template <typename T> void AOS::cut_freq_generic(int number) {
                       return a.first.getR() > b.first.getR();
                     });
 
-  std::unordered_set<pixel<T>, PixelHash<T>> pixels_to_delete;
-  pixels_to_delete.reserve(static_cast<size_t>(number));
-  for (size_t i = 0; i < static_cast<size_t>(number); i++) {
-    pixels_to_delete.insert(freq_vector[i].first);
-  }
+  for (size_t i = 0; i < static_cast<size_t>(number); ++i) {
+    const auto &color1 = freq_vector[i];
+    double min_distance = std::numeric_limits<double>::max();
+    size_t closest_color_index = 0;
+    for (auto j = static_cast<size_t>(number); j < freq_vector.size(); ++j) {
+      const auto &color2 = freq_vector[j];
 
-  for (size_t i = 0; i < static_cast<size_t>(number); i++) {
-    for (auto &i : freq_vector[i].second.second) {
-      constexpr auto x = static_cast<size_t>(3 + 2 * 267);
-      pixel_data[i] = closest_pixel<T>(x, pixels_to_delete);
+      const double distance =
+          std::sqrt(std::pow(color1.first.getB() - color2.first.getB(), 2) +
+                    std::pow(color1.first.getG() - color2.first.getG(), 2) +
+                    std::pow(color1.first.getR() - color2.first.getR(), 2));
+      if (distance < min_distance) {
+        min_distance = distance;
+        closest_color_index = j;
+      }
+    }
+    for (const auto &pos : freq_vector[i].second.second) {
+      pixel_data[pos] = freq_vector[closest_color_index].first;
     }
   }
-
   data = std::move(pixel_data);
 }
-template <typename T>
-const AOS::pixel<T> AOS::closest_pixel(
-    size_t origen,
-    std::unordered_set<pixel<T>, AOS::PixelHash<T>> &pixels_to_delete) const {}
 } // namespace imgaos

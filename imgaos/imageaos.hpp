@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <gtest/gtest_prod.h>
 #include <string>
-#include <unordered_set>
 #include <variant>
 #include <vector>
 
@@ -48,10 +47,6 @@ private:
   template <typename T, typename U> void max_level_generic(int level);
   template <typename T> void resize_generic(int new_width, int new_height);
   template <typename T> void cut_freq_generic(int new_freq);
-  template <typename T>
-  const pixel<T> closest_pixel(
-      size_t origen,
-      std::unordered_set<pixel<T>, AOS::PixelHash<T>> &pixels_to_delete) const;
 
 public:
   void max_level(int level);

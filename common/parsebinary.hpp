@@ -6,17 +6,16 @@
 #include <vector>
 
 namespace common {
-class ParseBinary {
-private:
-  static void skip_spaces(const std::vector<uint8_t> &data, size_t &i);
-  static void skip_one_space(const std::vector<uint8_t> &data, size_t &i);
-  static std::string read_string(const std::vector<uint8_t> &data, size_t &i);
-  static std::string read_string_to_end(const std::vector<uint8_t> &data,
-                                        size_t &i);
+  class ParseBinary {
+    private:
+      static void skip_spaces(std::vector<uint8_t> const & data, size_t & i);
+      static void skip_one_space(std::vector<uint8_t> const & data, size_t & i);
+      static std::string read_string(std::vector<uint8_t> const & data, size_t & i);
+      static std::string read_string_to_end(std::vector<uint8_t> const & data, size_t & i);
 
-public:
-  static std::vector<std::string> parse(const std::vector<uint8_t> &data);
-};
-} // namespace common
+    public:
+      static std::vector<std::string> parse(std::vector<uint8_t> const & data);
+  };
+}  // namespace common
 
 #endif

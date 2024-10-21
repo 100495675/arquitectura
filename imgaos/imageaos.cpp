@@ -1,6 +1,8 @@
 #include "imageaos.hpp"
+
 #include "../common/parsebinary.hpp"
 #include "../common/validatefile.hpp"
+
 #include <cstdint>
 #include <cstdlib>
 #include <string>
@@ -9,110 +11,108 @@
 
 namespace imgaos {
 
-constexpr int UINT8_BITS = 8;
+  constexpr int UINT8_BITS = 8;
 
-int AOS::getWidth() const { return width; }
-int AOS::getHeight() const { return height; }
-int AOS::getMaxLevel() const { return maxlevel; }
-
-AOS::AOS(const std::vector<uint8_t> &binary) {
-  const std::vector<std::string> tokens = common::ParseBinary::parse(binary);
-
-  common::validateFile::validate_magic_number(tokens[0]);
-  width = common::validateFile::validate_width(tokens[1]);
-  height = common::validateFile::validate_height(tokens[2]);
-  maxlevel = common::validateFile::validate_maxlevel(tokens[3]);
-
-  if (maxlevel <= UINT8_MAX) {
-    type = Type::UINT8;
-  } else {
-    type = Type::UINT16;
+  int AOS::getWidth() const {
+    return width;
   }
 
-  const size_t bytes_per_pixel = static_cast<size_t>(type) * 3;
-  const auto total_pixels =
-      static_cast<size_t>(width) * static_cast<size_t>(height);
-  const size_t total_bytes = total_pixels * bytes_per_pixel;
-
-  common::validateFile::validate_pixels(tokens[4], total_bytes);
-
-  if (type == Type::UINT8) {
-    process_uint8_pixels(tokens[4], total_pixels);
-  } else {
-    process_uint16_pixels(tokens[4], total_pixels);
-  }
-}
-
-void AOS::process_uint8_pixels(const std::string &pixel_data,
-                               size_t total_pixels) {
-
-  std::vector<pixel<uint8_t>> vector_data;
-  vector_data.reserve(total_pixels);
-
-  for (size_t i = 0; i < total_pixels; i++) {
-    const pixel<uint8_t> new_pixel(static_cast<uint8_t>(pixel_data[i * 3]),
-                                   static_cast<uint8_t>(pixel_data[i * 3 + 1]),
-                                   static_cast<uint8_t>(pixel_data[i * 3 + 2]));
-    vector_data.push_back(new_pixel);
+  int AOS::getHeight() const {
+    return height;
   }
 
-  data = std::move(vector_data);
-}
-
-void AOS::process_uint16_pixels(const std::string &pixel_data,
-                                size_t total_pixels) {
-
-  std::vector<pixel<uint16_t>> vector_data;
-  vector_data.reserve(total_pixels);
-
-  for (size_t i = 0; i < total_pixels; i++) {
-    const pixel<uint16_t> new_pixel(
-        static_cast<uint16_t>((pixel_data[i * 6] << 8) | pixel_data[i * 6 + 1]),
-        static_cast<uint16_t>((pixel_data[i * 6 + 2] << 8) |
-                              pixel_data[i * 6 + 3]),
-        static_cast<uint16_t>((pixel_data[i * 6 + 4] << 8) |
-                              pixel_data[i * 6 + 5]));
-    vector_data.push_back(new_pixel);
+  int AOS::getMaxLevel() const {
+    return maxlevel;
   }
 
-  data = std::move(vector_data);
-}
+  AOS::AOS(std::vector<uint8_t> const & binary) {
+    std::vector<std::string> const tokens = common::ParseBinary::parse(binary);
 
-std::vector<uint8_t> AOS::toBinary() const {
+    common::validateFile::validate_magic_number(tokens[0]);
+    width    = common::validateFile::validate_width(tokens[1]);
+    height   = common::validateFile::validate_height(tokens[2]);
+    maxlevel = common::validateFile::validate_maxlevel(tokens[3]);
 
-  const std::string header = "P6\n" + std::to_string(width) + " " +
-                             std::to_string(height) + "\n" +
-                             std::to_string(maxlevel) + "\n";
-  std::vector<uint8_t> binary;
-
-  const size_t pixel_size = static_cast<size_t>(type) * 3;
-  const size_t number_of_pixels =
-      static_cast<size_t>(width) * static_cast<size_t>(height);
-  binary.reserve(header.size() + number_of_pixels * pixel_size);
-
-  binary.insert(binary.begin(), header.begin(), header.end());
-
-  write_pixels(binary);
-
-  return binary;
-}
-
-void AOS::write_pixels(std::vector<uint8_t> &binary) const {
-  if (type == Type::UINT8) {
-    for (auto &p : std::get<std::vector<pixel<uint8_t>>>(data)) {
-      binary.push_back(p.getR());
-      binary.push_back(p.getG());
-      binary.push_back(p.getB());
+    if (maxlevel <= UINT8_MAX) {
+      type = Type::UINT8;
+    } else {
+      type = Type::UINT16;
     }
-  } else {
-    for (auto &p : std::get<std::vector<pixel<uint16_t>>>(data)) {
-      binary.push_back(static_cast<uint8_t>(p.getR() >> UINT8_BITS));
-      binary.push_back(static_cast<uint8_t>(p.getR() & UINT8_MAX));
-      binary.push_back(static_cast<uint8_t>(p.getG() >> UINT8_BITS));
-      binary.push_back(static_cast<uint8_t>(p.getG() & UINT8_MAX));
-      binary.push_back(static_cast<uint8_t>(p.getB() >> UINT8_BITS));
-      binary.push_back(static_cast<uint8_t>(p.getB() & UINT8_MAX));
+
+    size_t const bytes_per_pixel = static_cast<size_t>(type) * 3;
+    auto const total_pixels      = static_cast<size_t>(width) * static_cast<size_t>(height);
+    size_t const total_bytes     = total_pixels * bytes_per_pixel;
+
+    common::validateFile::validate_pixels(tokens[4], total_bytes);
+
+    if (type == Type::UINT8) {
+      process_uint8_pixels(tokens[4], total_pixels);
+    } else {
+      process_uint16_pixels(tokens[4], total_pixels);
     }
   }
-}
-} // namespace imgaos
+
+  void AOS::process_uint8_pixels(std::string const & pixel_data, size_t total_pixels) {
+    std::vector<pixel<uint8_t>> vector_data;
+    vector_data.reserve(total_pixels);
+
+    for (size_t i = 0; i < total_pixels; i++) {
+      pixel<uint8_t> const new_pixel(static_cast<uint8_t>(pixel_data[i * 3]),
+                                     static_cast<uint8_t>(pixel_data[i * 3 + 1]),
+                                     static_cast<uint8_t>(pixel_data[i * 3 + 2]));
+      vector_data.push_back(new_pixel);
+    }
+
+    data = std::move(vector_data);
+  }
+
+  void AOS::process_uint16_pixels(std::string const & pixel_data, size_t total_pixels) {
+    std::vector<pixel<uint16_t>> vector_data;
+    vector_data.reserve(total_pixels);
+
+    for (size_t i = 0; i < total_pixels; i++) {
+      pixel<uint16_t> const new_pixel(
+          static_cast<uint16_t>((pixel_data[i * 6] << 8) | pixel_data[i * 6 + 1]),
+          static_cast<uint16_t>((pixel_data[i * 6 + 2] << 8) | pixel_data[i * 6 + 3]),
+          static_cast<uint16_t>((pixel_data[i * 6 + 4] << 8) | pixel_data[i * 6 + 5]));
+      vector_data.push_back(new_pixel);
+    }
+
+    data = std::move(vector_data);
+  }
+
+  std::vector<uint8_t> AOS::toBinary() const {
+    std::string const header = "P6\n" + std::to_string(width) + " " + std::to_string(height) +
+                               "\n" + std::to_string(maxlevel) + "\n";
+    std::vector<uint8_t> binary;
+
+    size_t const pixel_size       = static_cast<size_t>(type) * 3;
+    size_t const number_of_pixels = static_cast<size_t>(width) * static_cast<size_t>(height);
+    binary.reserve(header.size() + number_of_pixels * pixel_size);
+
+    binary.insert(binary.begin(), header.begin(), header.end());
+
+    write_pixels(binary);
+
+    return binary;
+  }
+
+  void AOS::write_pixels(std::vector<uint8_t> & binary) const {
+    if (type == Type::UINT8) {
+      for (auto & p : std::get<std::vector<pixel<uint8_t>>>(data)) {
+        binary.push_back(p.getR());
+        binary.push_back(p.getG());
+        binary.push_back(p.getB());
+      }
+    } else {
+      for (auto & p : std::get<std::vector<pixel<uint16_t>>>(data)) {
+        binary.push_back(static_cast<uint8_t>(p.getR() >> UINT8_BITS));
+        binary.push_back(static_cast<uint8_t>(p.getR() & UINT8_MAX));
+        binary.push_back(static_cast<uint8_t>(p.getG() >> UINT8_BITS));
+        binary.push_back(static_cast<uint8_t>(p.getG() & UINT8_MAX));
+        binary.push_back(static_cast<uint8_t>(p.getB() >> UINT8_BITS));
+        binary.push_back(static_cast<uint8_t>(p.getB() & UINT8_MAX));
+      }
+    }
+  }
+}  // namespace imgaos

@@ -12,37 +12,39 @@
 using namespace common;
 using namespace imgaos;
 
-void info(InputArgs const & args) {
-  std::vector<uint8_t> const data = BinaryIO::read_binary(args.getInput());
-  const AOS image(data);
+namespace {
+  void info(InputArgs const & args) {
+    std::vector<uint8_t> const data = BinaryIO::read_binary(args.getInput());
+    const AOS image(data);
 
-  std::cout << "Input: " << args.getInput() << "\n";
-  std::cout << "Output: " << args.getOutput() << "\n";
-  std::cout << "Operation: " << args.getCommandAsString() << "\n";
-  std::cout << "Image size: " << image.getWidth() << "x" << image.getHeight() << "\n";
-  std::cout << "Max level: " << image.getMaxLevel() << "\n";
-}
+    std::cout << "Input: " << args.getInput() << "\n";
+    std::cout << "Output: " << args.getOutput() << "\n";
+    std::cout << "Operation: " << args.getCommandAsString() << "\n";
+    std::cout << "Image size: " << image.getWidth() << "x" << image.getHeight() << "\n";
+    std::cout << "Max level: " << image.getMaxLevel() << "\n";
+  }
 
-void max_level(InputArgs const & args) {
-  AOS image(BinaryIO::read_binary(args.getInput()));
-  auto const & data = args.getMaxLevelData();
-  image.max_level(data.getLevel());
-  BinaryIO::write_binary(image.toBinary(), args.getOutput());
-}
+  void max_level(InputArgs const & args) {
+    AOS image(BinaryIO::read_binary(args.getInput()));
+    auto const & data = args.getMaxLevelData();
+    image.max_level(data.getLevel());
+    BinaryIO::write_binary(image.toBinary(), args.getOutput());
+  }
 
-void resize(InputArgs const & args) {
-  AOS image(BinaryIO::read_binary(args.getInput()));
-  auto const & data = args.getResizeData();
-  image.resize(data.getWidth(), data.getHeight());
-  BinaryIO::write_binary(image.toBinary(), args.getOutput());
-}
+  void resize(InputArgs const & args) {
+    AOS image(BinaryIO::read_binary(args.getInput()));
+    auto const & data = args.getResizeData();
+    image.resize(data.getWidth(), data.getHeight());
+    BinaryIO::write_binary(image.toBinary(), args.getOutput());
+  }
 
-void cut_freq(InputArgs const & args) {
-  AOS image(BinaryIO::read_binary(args.getInput()));
-  auto const & data = args.getCutFreqData();
-  image.cut_freq(data.getFreq());
-  BinaryIO::write_binary(image.toBinary(), args.getOutput());
-}
+  void cut_freq(InputArgs const & args) {
+    AOS image(BinaryIO::read_binary(args.getInput()));
+    auto const & data = args.getCutFreqData();
+    image.cut_freq(data.getFreq());
+    BinaryIO::write_binary(image.toBinary(), args.getOutput());
+  }
+}  // namespace
 
 int main(int argc, char const * argv[]) {
   std::vector<std::string> const argvector(argv, argv + argc);

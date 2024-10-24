@@ -27,6 +27,9 @@ run_test maxlevel_string
 run_test maxlevel_demasiado_grande
 
 run_test resize_normal
+run_test resize_invalid_width
+run_test resize_invalid_height
+run_test resize_missing_file
 
 rm -rf "$dir/output"
 

@@ -32,20 +32,20 @@ namespace imgaos {
   template <typename T, typename U>
   void AOS::max_level_generic(int level) {
     if constexpr (std::is_same_v<T, U>) {
-      for (auto & p : std::get<std::vector<pixel<T>>>(data)) {
-        T new_r = static_cast<T>(p.getR() * level / maxlevel);
-        T new_g = static_cast<T>(p.getG() * level / maxlevel);
-        T new_b = static_cast<T>(p.getB() * level / maxlevel);
-        p       = pixel<T>(new_r, new_g, new_b);
+      for (auto & my_pixel : std::get<std::vector<pixel<T>>>(data)) {
+        T new_r  = static_cast<T>(my_pixel.getR() * level / maxlevel);
+        T new_g  = static_cast<T>(my_pixel.getG() * level / maxlevel);
+        T new_b  = static_cast<T>(my_pixel.getB() * level / maxlevel);
+        my_pixel = pixel<T>(new_r, new_g, new_b);
       }
       maxlevel = level;
     } else {
       std::vector<pixel<U>> vector_data;
       vector_data.reserve(std::get<std::vector<pixel<T>>>(data).size());
-      for (auto & p : std::get<std::vector<pixel<T>>>(data)) {
-        pixel<U> const new_pixel(static_cast<U>(p.getR() * level / maxlevel),
-                                 static_cast<U>(p.getG() * level / maxlevel),
-                                 static_cast<U>(p.getB() * level / maxlevel));
+      for (auto & my_pixel : std::get<std::vector<pixel<T>>>(data)) {
+        pixel<U> const new_pixel(static_cast<U>(my_pixel.getR() * level / maxlevel),
+                                 static_cast<U>(my_pixel.getG() * level / maxlevel),
+                                 static_cast<U>(my_pixel.getB() * level / maxlevel));
         vector_data.push_back(new_pixel);
       }
       data     = std::move(vector_data);

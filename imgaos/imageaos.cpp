@@ -72,9 +72,11 @@ namespace imgaos {
 
     for (size_t i = 0; i < total_pixels; i++) {
       pixel<uint16_t> const new_pixel(
-          static_cast<uint16_t>((pixel_data[i * 6] << 8) | pixel_data[i * 6 + 1]),
-          static_cast<uint16_t>((pixel_data[i * 6 + 2] << 8) | pixel_data[i * 6 + 3]),
-          static_cast<uint16_t>((pixel_data[i * 6 + 4] << 8) | pixel_data[i * 6 + 5]));
+          Red<uint16_t>(static_cast<uint16_t>((pixel_data[i * 6] << 8) | pixel_data[i * 6 + 1])),
+          Green<uint16_t>(
+              static_cast<uint16_t>((pixel_data[i * 6 + 2] << 8) | pixel_data[i * 6 + 3])),
+          Blue<uint16_t>(
+              static_cast<uint16_t>((pixel_data[i * 6 + 4] << 8) | pixel_data[i * 6 + 5])));
       vector_data.push_back(new_pixel);
     }
 
@@ -99,19 +101,19 @@ namespace imgaos {
 
   void AOS::write_pixels(std::vector<uint8_t> & binary) const {
     if (type == Type::UINT8) {
-      for (auto & p : std::get<std::vector<pixel<uint8_t>>>(data)) {
-        binary.push_back(p.getR());
-        binary.push_back(p.getG());
-        binary.push_back(p.getB());
+      for (auto const & my_pixel : std::get<std::vector<pixel<uint8_t>>>(data)) {
+        binary.push_back(my_pixel.getR());
+        binary.push_back(my_pixel.getG());
+        binary.push_back(my_pixel.getB());
       }
     } else {
-      for (auto & p : std::get<std::vector<pixel<uint16_t>>>(data)) {
-        binary.push_back(static_cast<uint8_t>(p.getR() >> UINT8_BITS));
-        binary.push_back(static_cast<uint8_t>(p.getR() & UINT8_MAX));
-        binary.push_back(static_cast<uint8_t>(p.getG() >> UINT8_BITS));
-        binary.push_back(static_cast<uint8_t>(p.getG() & UINT8_MAX));
-        binary.push_back(static_cast<uint8_t>(p.getB() >> UINT8_BITS));
-        binary.push_back(static_cast<uint8_t>(p.getB() & UINT8_MAX));
+      for (auto const & my_pixel : std::get<std::vector<pixel<uint16_t>>>(data)) {
+        binary.push_back(static_cast<uint8_t>(my_pixel.getR() >> UINT8_BITS));
+        binary.push_back(static_cast<uint8_t>(my_pixel.getR() & UINT8_MAX));
+        binary.push_back(static_cast<uint8_t>(my_pixel.getG() >> UINT8_BITS));
+        binary.push_back(static_cast<uint8_t>(my_pixel.getG() & UINT8_MAX));
+        binary.push_back(static_cast<uint8_t>(my_pixel.getB() >> UINT8_BITS));
+        binary.push_back(static_cast<uint8_t>(my_pixel.getB() & UINT8_MAX));
       }
     }
   }

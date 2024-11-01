@@ -12,6 +12,7 @@
 // NOLINTBEGIN(modernize-type-traits)
 // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
+// NOLINTBEGIN(readability-magic-numbers)
 namespace imgaos {
   TEST(resize, invalid_width) {
     std::string const inputs_str = "P6\n2 "
@@ -157,6 +158,7 @@ namespace imgaos {
   }
 }  // namespace imgaos
 
+// NOLINTEND(readability-magic-numbers)
 // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
 // NOLINTEND(cppcoreguidelines-avoid-magic-numbers)
 // NOLINTEND(modernize-type-traits)

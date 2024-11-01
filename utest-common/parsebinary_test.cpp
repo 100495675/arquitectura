@@ -28,7 +28,7 @@ namespace common {
   }
 
   TEST(parse, empty) {
-    std::string const data_str = "";
+    std::string const data_str;
     std::vector<uint8_t> const data(data_str.begin(), data_str.end());
 
     try {

@@ -9,68 +9,70 @@
 
 namespace common {
 
-  void ParseBinary::skip_spaces(std::vector<uint8_t> const & data, size_t & i) {
-    skip_one_space(data, i);
-    while (std::isspace(data.at(i))) {
-      if (i < data.size() - 1) {
-        i++;
+  void ParseBinary::skip_spaces(std::vector<uint8_t> const & data, size_t & index) {
+    skip_one_space(data, index);
+    while (std::isspace(data.at(index)) != 0) {
+      if (index < data.size() - 1) {
+        index++;
       } else {
         throw std::runtime_error("Error en los espacios");
       }
     }
   }
 
-  void ParseBinary::skip_one_space(std::vector<uint8_t> const & data, size_t & i) {
-    if (std::isspace(data.at(i)) && i < data.size() - 1) {
-      i++;
+  void ParseBinary::skip_one_space(std::vector<uint8_t> const & data, size_t & index) {
+    if (std::isspace(data.at(index)) != 0 && index < data.size() - 1) {
+      index++;
     } else {
       throw std::runtime_error("Error en los espacios");
     }
   }
 
-  std::string ParseBinary::read_string(std::vector<uint8_t> const & data, size_t & i) {
-    std::string s;
-    while (i < data.size() && !std::isspace(data.at(i))) {
-      s += static_cast<char>(data.at(i));
-      i++;
+  std::string ParseBinary::read_string(std::vector<uint8_t> const & data, size_t & index) {
+    std::string str;
+    while (index < data.size() && std::isspace(data.at(index)) == 0) {
+      str += static_cast<char>(data.at(index));
+      index++;
     }
-    if (i >= data.size()) { throw std::runtime_error("Error en la lectura de la cadena"); }
-    return s;
+    if (index >= data.size()) { throw std::runtime_error("Error en la lectura de la cadena"); }
+    return str;
   }
 
-  std::string ParseBinary::read_string_to_end(std::vector<uint8_t> const & data, size_t & i) {
-    std::string s;
-    while (i < data.size()) {
-      s += static_cast<char>(data.at(i));
-      i++;
+  std::string ParseBinary::read_string_to_end(std::vector<uint8_t> const & data, size_t & index) {
+    std::string str;
+    while (index < data.size()) {
+      str += static_cast<char>(data.at(index));
+      index++;
     }
-    return s;
+    return str;
   }
 
   std::vector<std::string> ParseBinary::parse(std::vector<uint8_t> const & data) {
-    if (data.size() == 0) { throw std::runtime_error("Error archivo vacio"); }
+    if (data.empty()) { throw std::runtime_error("Error archivo vacio"); }
     std::vector<std::string> result;
-    size_t i = 0;
+    size_t index = 0;
 
-    if (std::isspace(data.at(i))) { throw std::runtime_error("Error en los espacios al inicio"); }
+    if (std::isspace(data.at(index)) != 0) {
+      throw std::runtime_error("Error en los espacios al inicio");
+    }
 
-    result.push_back(read_string(data, i));
+    result.push_back(read_string(data, index));
 
-    skip_spaces(data, i);
+    skip_spaces(data, index);
 
-    result.push_back(read_string(data, i));
+    result.push_back(read_string(data, index));
 
-    skip_spaces(data, i);
+    skip_spaces(data, index);
 
-    result.push_back(read_string(data, i));
+    result.push_back(read_string(data, index));
 
-    skip_spaces(data, i);
+    skip_spaces(data, index);
 
-    result.push_back(read_string(data, i));
+    result.push_back(read_string(data, index));
 
-    skip_one_space(data, i);
+    skip_one_space(data, index);
 
-    result.push_back(read_string_to_end(data, i));
+    result.push_back(read_string_to_end(data, index));
 
     return result;
   }

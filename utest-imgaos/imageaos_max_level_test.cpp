@@ -11,6 +11,7 @@
 // NOLINTBEGIN(modernize-type-traits)
 // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
+// NOLINTBEGIN(readability-magic-numbers)
 namespace imgaos {
 
   TEST(max_level, uint8_to_uint8) {
@@ -146,6 +147,7 @@ namespace imgaos {
   }
 }  // namespace imgaos
 
+// NOLINTEND(readability-magic-numbers)
 // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
 // NOLINTEND(cppcoreguidelines-avoid-magic-numbers)
 // NOLINTEND(modernize-type-traits)

@@ -332,7 +332,7 @@ namespace common {
                                            "resize",          "100",         "200"};
     InputArgs const input_args(argv);
     try {
-      auto _ = input_args.getMaxLevelData();
+      (void) input_args.getMaxLevelData();
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & err) {
       EXPECT_EQ(err.what(), std::string("Error: Invalid command for maxlevel"));
@@ -352,7 +352,7 @@ namespace common {
                                            "cutfreq", "100"};
     InputArgs const input_args(argv);
     try {
-      auto _ = input_args.getResizeData();
+      (void) input_args.getResizeData();
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & err) {
       EXPECT_EQ(err.what(), std::string("Error: Invalid command for resize"));
@@ -371,7 +371,7 @@ namespace common {
                                            "maxlevel", "100"};
     InputArgs const input_args(argv);
     try {
-      auto _ = input_args.getCutFreqData();
+      (void) input_args.getCutFreqData();
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & err) {
       EXPECT_EQ(err.what(), std::string("Error: Invalid command for cutfreq"));

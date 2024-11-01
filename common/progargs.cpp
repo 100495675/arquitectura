@@ -102,7 +102,7 @@ namespace common {
       throw std::invalid_argument("Error: Invalid resize height: " + height_str);
     }
     if (height <= 0) { throw std::invalid_argument("Error: Invalid resize height: " + height_str); }
-    values = ResizeData(width, height);
+    values = ResizeData(Width(width), Height(height));
   }
 
   void InputArgs::validate_cutfreq(int argc, std::vector<std::string> const & argv_strings) {
@@ -124,7 +124,7 @@ namespace common {
 
   void InputArgs::validate_compress(int argc, std::vector<std::string> const & argv_strings) {
     if (argc != ARGC_COMPRESS) {
-      std::string extra_args = "";
+      std::string extra_args;
       for (int i = 4; i < argc; i++) {
         extra_args += argv_strings[static_cast<size_t>(i)];
         if (i < argc - 1) { extra_args += " "; }

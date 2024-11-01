@@ -39,7 +39,7 @@ namespace common {
   TEST(validate_maxlevel, texto) {
     std::string const input = "abc";
     try {
-      int const _ = validateFile::validate_maxlevel(input);
+      (void) validateFile::validate_maxlevel(input);
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & ia) {
       ASSERT_EQ("Invalid maxlevel", std::string(ia.what()));
@@ -49,7 +49,7 @@ namespace common {
   TEST(validate_maxlevel, negativo) {
     std::string const input = "-1";
     try {
-      int const _ = validateFile::validate_maxlevel(input);
+      (void) validateFile::validate_maxlevel(input);
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & ia) {
       ASSERT_EQ("Invalid maxlevel", std::string(ia.what()));
@@ -59,7 +59,7 @@ namespace common {
   TEST(validate_maxlevel, grande) {
     std::string const input = "123456";
     try {
-      int const _ = validateFile::validate_maxlevel(input);
+      (void) validateFile::validate_maxlevel(input);
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & ia) {
       ASSERT_EQ("Invalid maxlevel", std::string(ia.what()));
@@ -70,7 +70,7 @@ namespace common {
     std::string const input = "abc";
 
     try {
-      int const _ = validateFile::validate_width(input);
+      (void) validateFile::validate_width(input);
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & ia) {
       ASSERT_EQ("Invalid width", std::string(ia.what()));
@@ -81,7 +81,7 @@ namespace common {
     std::string const input = "-1";
 
     try {
-      int const _ = validateFile::validate_width(input);
+      (void) validateFile::validate_width(input);
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & ia) {
       ASSERT_EQ("Invalid width", std::string(ia.what()));
@@ -92,7 +92,7 @@ namespace common {
     std::string const input = "abc";
 
     try {
-      int const _ = validateFile::validate_height(input);
+      (void) validateFile::validate_height(input);
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & ia) {
       ASSERT_EQ("Invalid height", std::string(ia.what()));
@@ -103,7 +103,7 @@ namespace common {
     std::string const input = "-1";
 
     try {
-      int const _ = validateFile::validate_height(input);
+      (void) validateFile::validate_height(input);
       FAIL() << "Expected std::invalid_argument";
     } catch (std::invalid_argument const & ia) {
       ASSERT_EQ("Invalid height", std::string(ia.what()));

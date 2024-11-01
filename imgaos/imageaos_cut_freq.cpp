@@ -23,11 +23,29 @@ namespace imgaos {
   }
 
   template <typename T>
+  void AOS::sort_first_n(
+      std::vector<std::pair<pixel<T>, std::pair<size_t, std::forward_list<size_t>>>> & freq_vector,
+      int number) {
+    std::partial_sort(freq_vector.begin(), freq_vector.begin() + number, freq_vector.end(),
+                      [](auto const & entry1, auto const & entry2) {
+                        if (entry1.second.first != entry2.second.first) {  // frecuencias
+                          return entry1.second.first < entry2.second.first;
+                        }
+                        if (entry1.first.getB() != entry2.first.getB()) {  // colores
+                          return entry1.first.getB() > entry2.first.getB();
+                        }
+                        if (entry1.first.getG() != entry2.first.getG()) {
+                          return entry1.first.getG() > entry2.first.getG();
+                        }
+                        return entry1.first.getR() > entry2.first.getR();
+                      });
+  }
+
+  template <typename T>
   void AOS::cut_freq_generic(int number) {
     std::vector<pixel<T>> pixel_data = std::get<std::vector<pixel<T>>>(data);
 
     std::unordered_map<pixel<T>, std::pair<size_t, std::forward_list<size_t>>, PixelHash<T>> freq;
-
     // habra que encontrar un optimo, este lo he puesto por poner algo
     freq.reserve(pixel_data.size() / 2);
 
@@ -38,24 +56,11 @@ namespace imgaos {
     if (freq.size() <= static_cast<size_t>(number)) {
       throw std::invalid_argument("Invalid cutfreq");
     }
-
     // Ineficiente pero no hay mas, se tiene que clonar para hacer cosas
     std::vector<std::pair<pixel<T>, std::pair<size_t, std::forward_list<size_t>>>> freq_vector(
         freq.begin(), freq.end());
 
-    std::partial_sort(freq_vector.begin(), freq_vector.begin() + number, freq_vector.end(),
-                      [](auto const & a, auto const & b) {
-                        if (a.second.first != b.second.first) {  // frecuencias
-                          return a.second.first < b.second.first;
-                        }
-                        if (a.first.getB() != b.first.getB()) {  // colores
-                          return a.first.getB() > b.first.getB();
-                        }
-                        if (a.first.getG() != b.first.getG()) {
-                          return a.first.getG() > b.first.getG();
-                        }
-                        return a.first.getR() > b.first.getR();
-                      });
+    sort_first_n(freq_vector, number);
 
     for (size_t i = 0; i < static_cast<size_t>(number); ++i) {
       auto const & color1        = freq_vector[i];

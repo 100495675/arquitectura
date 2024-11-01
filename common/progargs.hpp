@@ -1,6 +1,8 @@
 #ifndef PROGARGS_HPP
 #define PROGARGS_HPP
 
+#include "aux.hpp"
+
 #include <cstdint>
 #include <cstdlib>
 #include <gtest/gtest_prod.h>
@@ -28,7 +30,8 @@ namespace common {
 
       class ResizeData {
         public:
-          ResizeData(int _w, int _h) : width(_w), height(_h) { }
+          ResizeData(Width width, Height height)
+            : width(width.getValue()), height(height.getValue()) { }
 
           [[nodiscard]] int getWidth() const { return width; }
 
@@ -68,11 +71,11 @@ namespace common {
       std::variant<MaxLevelData, ResizeData, CutFreqData> values =
           MaxLevelData(0);  // default, to avoid a compiler warning
 
-      void validate_info(int argc, std::vector<std::string> const & argv_strings);
+      static void validate_info(int argc, std::vector<std::string> const & argv_strings);
       void validate_maxlevel(int argc, std::vector<std::string> const & argv_strings);
       void validate_resize(int argc, std::vector<std::string> const & argv_strings);
       void validate_cutfreq(int argc, std::vector<std::string> const & argv_strings);
-      void validate_compress(int argc, std::vector<std::string> const & argv_strings);
+      static void validate_compress(int argc, std::vector<std::string> const & argv_strings);
   };
 
 }  // namespace common

@@ -1,7 +1,9 @@
 #ifndef IMGAOS_HPP
 #define IMGAOS_HPP
+#include "../common/aux.hpp"
 
 #include <cstdint>
+#include <forward_list>
 #include <gtest/gtest_prod.h>
 #include <string>
 #include <variant>
@@ -16,27 +18,28 @@ namespace imgaos {
       template <typename T>
       struct pixel {
         public:
-          pixel(T r_, T g_, T b_) : r(r_), g(g_), b(b_) { }
+          pixel(Red<T> red, Green<T> green, Blue<T> blue)
+            : red(red.getValue()), green(green.getValue()), blue(blue.getValue()) { }
 
           bool operator==(pixel<T> const & other) const = default;
 
-          [[nodiscard]] T getR() const { return r; }
+          [[nodiscard]] T getR() const { return red; }
 
-          [[nodiscard]] T getG() const { return g; }
+          [[nodiscard]] T getG() const { return green; }
 
-          [[nodiscard]] T getB() const { return b; }
+          [[nodiscard]] T getB() const { return blue; }
 
         private:
-          T r = 0;
-          T g = 0;
-          T b = 0;
+          T red   = 0;
+          T green = 0;
+          T blue  = 0;
       };
 
       template <typename T>
       struct PixelHash {
-          size_t operator()(const AOS::pixel<T> & p) const {
-            return std::hash<T>()(p.getR()) ^ (std::hash<T>()(p.getG()) << 1) ^
-                   (std::hash<T>()(p.getB()) << 2);
+          size_t operator()(const AOS::pixel<T> & pixel) const {
+            return std::hash<T>()(pixel.getR()) ^ (std::hash<T>()(pixel.getG()) << 1) ^
+                   (std::hash<T>()(pixel.getB()) << 2);
           }
       };
 
@@ -54,9 +57,18 @@ namespace imgaos {
       template <typename T, typename U>
       void max_level_generic(int level);
       template <typename T>
-      void resize_generic(int new_width, int new_height);
+      void resize_generic(Width new_width, Height new_height);
+
       template <typename T>
-      void cut_freq_generic(int new_freq);
+      pixel<T> interpolate_pixel(std::vector<pixel<T>> const & old_vector_data, Size old_size,
+                                 int new_x, int new_y);
+      template <typename T>
+      void cut_freq_generic(int number);
+      template <typename T>
+      void sort_first_n(
+          std::vector<std::pair<pixel<T>, std::pair<size_t, std::forward_list<size_t>>>> &
+              freq_vector,
+          int number);
 
     public:
       void max_level(int level);

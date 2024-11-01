@@ -4,7 +4,8 @@ add_executable(utest-imgaos
 imageaos_test.cpp
 imageaos_resize_test.cpp
 imageaos_cut_freq_test.cpp
-imageaos_max_level_test.cpp)
+imageaos_max_level_test.cpp
+imageaos_compress_test.cpp)
 # Library dependencies
 target_link_libraries (utest-imgaos
 PRIVATE

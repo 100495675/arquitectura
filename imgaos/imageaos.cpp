@@ -11,8 +11,6 @@
 
 namespace imgaos {
 
-  constexpr int UINT8_BITS = 8;
-
   int AOS::getWidth() const {
     return width;
   }
@@ -102,18 +100,11 @@ namespace imgaos {
   void AOS::write_pixels(std::vector<uint8_t> & binary) const {
     if (type == Type::UINT8) {
       for (auto const & my_pixel : std::get<std::vector<pixel<uint8_t>>>(data)) {
-        binary.push_back(my_pixel.getR());
-        binary.push_back(my_pixel.getG());
-        binary.push_back(my_pixel.getB());
+        my_pixel.write_to_binary(binary);
       }
     } else {
       for (auto const & my_pixel : std::get<std::vector<pixel<uint16_t>>>(data)) {
-        binary.push_back(static_cast<uint8_t>(my_pixel.getR() >> UINT8_BITS));
-        binary.push_back(static_cast<uint8_t>(my_pixel.getR() & UINT8_MAX));
-        binary.push_back(static_cast<uint8_t>(my_pixel.getG() >> UINT8_BITS));
-        binary.push_back(static_cast<uint8_t>(my_pixel.getG() & UINT8_MAX));
-        binary.push_back(static_cast<uint8_t>(my_pixel.getB() >> UINT8_BITS));
-        binary.push_back(static_cast<uint8_t>(my_pixel.getB() & UINT8_MAX));
+        my_pixel.write_to_binary(binary);
       }
     }
   }

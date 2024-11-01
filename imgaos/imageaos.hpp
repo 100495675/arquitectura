@@ -10,6 +10,7 @@
 #include <vector>
 
 namespace imgaos {
+
   class AOS {
       FRIEND_TEST(imgaos, normal_uint8);
       FRIEND_TEST(imgaos, normal_uint16);
@@ -20,6 +21,23 @@ namespace imgaos {
         public:
           pixel(Red<T> red, Green<T> green, Blue<T> blue)
             : red(red.getValue()), green(green.getValue()), blue(blue.getValue()) { }
+
+          void write_to_binary(std::vector<uint8_t> & binary) const {
+            if constexpr (std::is_same_v<T, uint8_t>) {
+              binary.push_back(static_cast<uint8_t>(red));
+              binary.push_back(static_cast<uint8_t>(green));
+              binary.push_back(static_cast<uint8_t>(blue));
+            }
+
+            else if constexpr (std::is_same_v<T, uint16_t>) {
+              binary.push_back(static_cast<uint8_t>(red >> (4 + 4)));
+              binary.push_back(static_cast<uint8_t>(red & UINT8_MAX));
+              binary.push_back(static_cast<uint8_t>(green >> (4 + 4)));
+              binary.push_back(static_cast<uint8_t>(green & UINT8_MAX));
+              binary.push_back(static_cast<uint8_t>(blue >> (4 + 4)));
+              binary.push_back(static_cast<uint8_t>(blue & UINT8_MAX));
+            }
+          }
 
           bool operator==(pixel<T> const & other) const = default;
 
@@ -69,11 +87,14 @@ namespace imgaos {
           std::vector<std::pair<pixel<T>, std::pair<size_t, std::forward_list<size_t>>>> &
               freq_vector,
           int number);
+      template <typename T>
+      [[nodiscard]] std::vector<uint8_t> compress_generic() const;
 
     public:
       void max_level(int level);
       void resize(int width, int height);
       void cut_freq(int freq);
+      [[nodiscard]] std::vector<uint8_t> compress() const;
       AOS(std::vector<uint8_t> const & binary);
       [[nodiscard]] std::vector<uint8_t> toBinary() const;
 

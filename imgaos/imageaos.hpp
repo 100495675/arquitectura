@@ -1,6 +1,7 @@
 #ifndef IMGAOS_HPP
 #define IMGAOS_HPP
 #include "../common/aux.hpp"
+#include "pixel.hpp"
 
 #include <cstdint>
 #include <forward_list>
@@ -16,51 +17,6 @@ namespace imgaos {
       FRIEND_TEST(imgaos, normal_uint16);
 
     private:
-      template <typename T>
-      struct pixel {
-        public:
-          pixel(Red<T> red, Green<T> green, Blue<T> blue)
-            : red(red.getValue()), green(green.getValue()), blue(blue.getValue()) { }
-
-          void write_to_binary(std::vector<uint8_t> & binary) const {
-            if constexpr (std::is_same_v<T, uint8_t>) {
-              binary.push_back(static_cast<uint8_t>(red));
-              binary.push_back(static_cast<uint8_t>(green));
-              binary.push_back(static_cast<uint8_t>(blue));
-            }
-
-            else if constexpr (std::is_same_v<T, uint16_t>) {
-              binary.push_back(static_cast<uint8_t>(red >> (4 + 4)));
-              binary.push_back(static_cast<uint8_t>(red & UINT8_MAX));
-              binary.push_back(static_cast<uint8_t>(green >> (4 + 4)));
-              binary.push_back(static_cast<uint8_t>(green & UINT8_MAX));
-              binary.push_back(static_cast<uint8_t>(blue >> (4 + 4)));
-              binary.push_back(static_cast<uint8_t>(blue & UINT8_MAX));
-            }
-          }
-
-          bool operator==(pixel<T> const & other) const = default;
-
-          [[nodiscard]] T getR() const { return red; }
-
-          [[nodiscard]] T getG() const { return green; }
-
-          [[nodiscard]] T getB() const { return blue; }
-
-        private:
-          T red   = 0;
-          T green = 0;
-          T blue  = 0;
-      };
-
-      template <typename T>
-      struct PixelHash {
-          size_t operator()(const AOS::pixel<T> & pixel) const {
-            return std::hash<T>()(pixel.getR()) ^ (std::hash<T>()(pixel.getG()) << 1) ^
-                   (std::hash<T>()(pixel.getB()) << 2);
-          }
-      };
-
       int width    = 0;
       int height   = 0;
       int maxlevel = 0;
@@ -75,11 +31,11 @@ namespace imgaos {
       template <typename T, typename U>
       void max_level_generic(int level);
       template <typename T>
-      void resize_generic(Width new_width, Height new_height);
+      void resize_generic(common::Width new_width, common::Height new_height);
 
       template <typename T>
-      pixel<T> interpolate_pixel(std::vector<pixel<T>> const & old_vector_data, Size old_size,
-                                 int new_x, int new_y);
+      pixel<T> interpolate_pixel(std::vector<pixel<T>> const & old_vector_data,
+                                 common::Size old_size, int new_x, int new_y);
       template <typename T>
       void cut_freq_generic(int number);
       template <typename T>

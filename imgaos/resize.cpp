@@ -1,3 +1,4 @@
+#include "../common/aux.hpp"
 #include "imageaos.hpp"
 
 #include <cmath>
@@ -11,23 +12,23 @@ namespace imgaos {
   void AOS::resize(int new_width, int new_height) {
     switch (type) {
       case Type::UINT8:
-        resize_generic<uint8_t>(Width(new_width), Height(new_height));
+        resize_generic<uint8_t>(common::Width(new_width), common::Height(new_height));
         break;
       case Type::UINT16:
-        resize_generic<uint16_t>(Width(new_width), Height(new_height));
+        resize_generic<uint16_t>(common::Width(new_width), common::Height(new_height));
         break;
     }
   }
 
   template <typename T>
-  void AOS::resize_generic(Width new_width, Height new_height) {
+  void AOS::resize_generic(common::Width new_width, common::Height new_height) {
     if (new_width.getValue() <= 0) { throw std::invalid_argument("Invalid width"); }
     if (new_height.getValue() <= 0) { throw std::invalid_argument("Invalid height"); }
 
-    Size const old_size    = Size(Height(height), Width(width));
-    width                  = new_width.getValue();
-    height                 = new_height.getValue();
-    auto & old_vector_data = std::get<std::vector<pixel<T>>>(data);
+    common::Size const old_size = common::Size(common::Height(height), common::Width(width));
+    width                       = new_width.getValue();
+    height                      = new_height.getValue();
+    auto & old_vector_data      = std::get<std::vector<pixel<T>>>(data);
 
     std::vector<pixel<T>> new_vector_data;
     new_vector_data.reserve(static_cast<size_t>(width) * static_cast<size_t>(height));
@@ -42,8 +43,8 @@ namespace imgaos {
   }
 
   template <typename T>
-  AOS::pixel<T> AOS::interpolate_pixel(std::vector<pixel<T>> const & old_vector_data, Size old_size,
-                                       int new_x, int new_y) {
+  pixel<T> AOS::interpolate_pixel(std::vector<pixel<T>> const & old_vector_data,
+                                  common::Size old_size, int new_x, int new_y) {
     float const old_x = static_cast<float>(new_x * (old_size.getWidth().getValue() - 1)) /
                         static_cast<float>(width - 1);
     float const old_y = static_cast<float>(new_y * (old_size.getHeight().getValue() - 1)) /

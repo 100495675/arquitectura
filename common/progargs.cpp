@@ -54,7 +54,7 @@ namespace common {
   void InputArgs::validate_info(int argc, std::vector<std::string> const & argv_strings) {
     if (argc != ARGC_INFO) {
       std::string extra_args;
-      for (int i = 4; i < argc; i++) {
+      for (int i = ARGC_MIN; i < argc; i++) {
         extra_args += argv_strings[static_cast<size_t>(i)];
         if (i < argc - 1) { extra_args += " "; }
       }
@@ -65,7 +65,7 @@ namespace common {
   void InputArgs::validate_maxlevel(int argc, std::vector<std::string> const & argv_strings) {
     if (argc != ARGC_MAXLEVEL) {
       throw std::invalid_argument("Error: Invalid number of extra arguments for maxlevel: " +
-                                  std::to_string(argc - 4));
+                                  std::to_string(argc - ARGC_MIN));
     }
     std::string const & level_str = argv_strings[POSITION_MAXLEVEL];
 
@@ -83,7 +83,7 @@ namespace common {
   void InputArgs::validate_resize(int argc, std::vector<std::string> const & argv_strings) {
     if (argc != ARGC_RESIZE) {
       throw std::invalid_argument("Error: Invalid number of extra arguments for resize: " +
-                                  std::to_string(argc - 4));
+                                  std::to_string(argc - ARGC_MIN));
     }
     std::string const & width_str = argv_strings[POSITION_WIDTH];
     int width                     = 0;
@@ -108,7 +108,7 @@ namespace common {
   void InputArgs::validate_cutfreq(int argc, std::vector<std::string> const & argv_strings) {
     if (argc != ARGC_CUTFREQ) {
       throw std::invalid_argument("Error: Invalid number of extra arguments for cutfreq: " +
-                                  std::to_string(argc - 4));
+                                  std::to_string(argc - ARGC_MIN));
     }
     std::string const & freq_str = argv_strings[POSITION_FREQ];
 
@@ -125,7 +125,7 @@ namespace common {
   void InputArgs::validate_compress(int argc, std::vector<std::string> const & argv_strings) {
     if (argc != ARGC_COMPRESS) {
       std::string extra_args;
-      for (int i = 4; i < argc; i++) {
+      for (int i = ARGC_MIN; i < argc; i++) {
         extra_args += argv_strings[static_cast<size_t>(i)];
         if (i < argc - 1) { extra_args += " "; }
       }

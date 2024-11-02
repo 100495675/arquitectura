@@ -1,70 +1,89 @@
 #ifndef AUX_HPP
 #define AUX_HPP
 
-class Width {
-  public:
-    explicit Width(int value) : value(value) { }
+namespace common {
+  class Width {
+    public:
+      explicit Width(int value);
+      [[nodiscard]] int getValue() const;
 
-    [[nodiscard]] int getValue() const { return value; }
+    private:
+      int value;
+  };
 
-  private:
-    int value;
-};
+  class Height {
+    public:
+      explicit Height(int value);
+      [[nodiscard]] int getValue() const;
 
-class Height {
-  public:
-    explicit Height(int value) : value(value) { }
+    private:
+      int value;
+  };
 
-    [[nodiscard]] int getValue() const { return value; }
+  class Size {
+    public:
+      explicit Size(Height height, Width width);
+      [[nodiscard]] Height getHeight() const;
+      [[nodiscard]] Width getWidth() const;
 
-  private:
-    int value;
-};
+    private:
+      Height height;
+      Width width;
+  };
 
-class Size {
-  public:
-    explicit Size(Height height, Width width) : height(height), width(width) { }
+  template <typename T>
+  struct Red {
+    public:
+      Red(T value);
+      [[nodiscard]] T getValue() const;
 
-    [[nodiscard]] Height getHeight() const { return height; }
+    private:
+      T value;
+  };
 
-    [[nodiscard]] Width getWidth() const { return width; }
+  template <typename T>
+  struct Green {
+    public:
+      Green(T value);
+      [[nodiscard]] T getValue() const;
 
-  private:
-    Height height;
-    Width width;
-};
+    private:
+      T value;
+  };
 
-template <typename T>
-struct Red {
-  public:
-    Red(T value) : value(value) { }
+  template <typename T>
+  struct Blue {
+    public:
+      Blue(T value);
+      [[nodiscard]] T getValue() const;
 
-    [[nodiscard]] T getValue() const { return value; }
+    private:
+      T value;
+  };
 
-  private:
-    T value;
-};
+  // Implementation
+  template <typename T>
+  Red<T>::Red(T value) : value(value) { }
 
-template <typename T>
-struct Green {
-  public:
-    Green(T value) : value(value) { }
+  template <typename T>
+  T Red<T>::getValue() const {
+    return value;
+  }
 
-    [[nodiscard]] T getValue() const { return value; }
+  template <typename T>
+  Green<T>::Green(T value) : value(value) { }
 
-  private:
-    T value;
-};
+  template <typename T>
+  T Green<T>::getValue() const {
+    return value;
+  }
 
-template <typename T>
-struct Blue {
-  public:
-    Blue(T value) : value(value) { }
+  template <typename T>
+  Blue<T>::Blue(T value) : value(value) { }
 
-    [[nodiscard]] T getValue() const { return value; }
-
-  private:
-    T value;
-};
-
-#endif  // AUX_HPP
+  template <typename T>
+  T Blue<T>::getValue() const {
+    return value;
+  }
+}  // namespace common
+#endif

@@ -1,5 +1,6 @@
 #include "imageaos.hpp"
 
+#include "../common/aux.hpp"
 #include "../common/parsebinary.hpp"
 #include "../common/validatefile.hpp"
 
@@ -55,9 +56,10 @@ namespace imgaos {
     vector_data.reserve(total_pixels);
 
     for (size_t i = 0; i < total_pixels; i++) {
-      pixel<uint8_t> const new_pixel(static_cast<uint8_t>(pixel_data[i * 3]),
-                                     static_cast<uint8_t>(pixel_data[i * 3 + 1]),
-                                     static_cast<uint8_t>(pixel_data[i * 3 + 2]));
+      pixel<uint8_t> const new_pixel(
+          common::Red<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3])),
+          common::Green<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3 + 1])),
+          common::Blue<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3 + 2])));
       vector_data.push_back(new_pixel);
     }
 
@@ -69,12 +71,12 @@ namespace imgaos {
     vector_data.reserve(total_pixels);
 
     for (size_t i = 0; i < total_pixels; i++) {
-      pixel<uint16_t> const new_pixel(
-          Red<uint16_t>(static_cast<uint16_t>((pixel_data[i * 6] << 8) | pixel_data[i * 6 + 1])),
-          Green<uint16_t>(
-              static_cast<uint16_t>((pixel_data[i * 6 + 2] << 8) | pixel_data[i * 6 + 3])),
-          Blue<uint16_t>(
-              static_cast<uint16_t>((pixel_data[i * 6 + 4] << 8) | pixel_data[i * 6 + 5])));
+      pixel<uint16_t> const new_pixel(common::Red<uint16_t>(static_cast<uint16_t>(
+                                          (pixel_data[i * 6] << 8) | pixel_data[i * 6 + 1])),
+                                      common::Green<uint16_t>(static_cast<uint16_t>(
+                                          (pixel_data[i * 6 + 2] << 8) | pixel_data[i * 6 + 3])),
+                                      common::Blue<uint16_t>(static_cast<uint16_t>(
+                                          (pixel_data[i * 6 + 4] << 8) | pixel_data[i * 6 + 5])));
       vector_data.push_back(new_pixel);
     }
 

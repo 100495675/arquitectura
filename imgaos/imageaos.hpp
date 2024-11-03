@@ -4,6 +4,7 @@
 #include "pixel.hpp"
 
 #include <cstdint>
+#include <cstring>
 #include <forward_list>
 #include <gtest/gtest_prod.h>
 #include <string>
@@ -44,6 +45,9 @@ namespace imgaos {
               freq_vector,
           int number);
       template <typename T>
+      void addPixelToTable(pixel<T> const & pixel, std::vector<uint8_t> & binary,
+                           size_t & index) const;
+      template <typename T>
       [[nodiscard]] std::vector<uint8_t> compress_generic() const;
 
     public:
@@ -58,6 +62,27 @@ namespace imgaos {
       [[nodiscard]] int getHeight() const;
       [[nodiscard]] int getMaxLevel() const;
   };
+
+  // Implementation
+  template <typename T>
+  void AOS::addPixelToTable(pixel<T> const & pixel, std::vector<uint8_t> & binary,
+                            size_t & index) const {
+    if (std::is_same<T, uint8_t>::value) {
+      binary[index++] = static_cast<uint8_t>(pixel.getR());
+      binary[index++] = static_cast<uint8_t>(pixel.getG());
+      binary[index++] = static_cast<uint8_t>(pixel.getB());
+    } else {
+      uint16_t const red   = pixel.getR();
+      uint16_t const green = pixel.getG();
+      uint16_t const blue  = pixel.getB();
+      binary[index++]      = static_cast<uint8_t>(red >> UINT8_WIDTH);
+      binary[index++]      = static_cast<uint8_t>(red & UINT8_MAX);
+      binary[index++]      = static_cast<uint8_t>(green >> UINT8_WIDTH);
+      binary[index++]      = static_cast<uint8_t>(green & UINT8_MAX);
+      binary[index++]      = static_cast<uint8_t>(blue >> UINT8_WIDTH);
+      binary[index++]      = static_cast<uint8_t>(blue & UINT8_MAX);
+    }
+  }
 }  // namespace imgaos
 
 #endif

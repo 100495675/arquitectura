@@ -44,6 +44,11 @@ namespace {
     image.cut_freq(data.getFreq());
     BinaryIO::write_binary(image.toBinary(), args.getOutput());
   }
+
+  void compress(InputArgs const & args) {
+    const AOS image(BinaryIO::read_binary(args.getInput()));
+    BinaryIO::write_binary(image.compress(), args.getOutput());
+  }
 }  // namespace
 
 int main(int argc, char const * argv[]) {
@@ -63,11 +68,11 @@ int main(int argc, char const * argv[]) {
       case InputArgs::Command::CutFreq:
         cut_freq(args);
         break;
-      /*
-    case InputArgs::Command::Compress:
-      compress(args);
-      break;
-      */
+
+      case InputArgs::Command::Compress:
+        compress(args);
+        break;
+
       default:
         throw std::invalid_argument("no he programado eso aun");
     }

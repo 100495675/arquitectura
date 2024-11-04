@@ -71,3 +71,42 @@ maxlevel_string() {
 
     test_error "$1" "$COMMAND" "$EXPECTED_ERROR"
 }
+
+# Falta el archivo deer-small-maxlevel1.ppm
+maxlevel_min_value() {
+    local INPUT_FILE="$2/input/deer-small.ppm"
+    local OUTPUT_FILE="$2/output/deer-small-maxlevel1.ppm"
+    local OPERATION="maxlevel"
+    local LEVEL="1"
+    local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"
+
+    local EXPECTED_FILE="$2/expected/deer-small-maxlevel1.ppm"
+
+    test_file "$1" "$COMMAND" "$EXPECTED_FILE" "$OUTPUT_FILE"
+}
+
+# Falta el archivo deer-small-maxlevel65535.ppm
+maxlevel_max_value() {
+    local INPUT_FILE="$2/input/deer-small.ppm"
+    local OUTPUT_FILE="$2/output/deer-small-maxlevel65535.ppm"
+    local OPERATION="maxlevel"
+    local LEVEL="65535"
+    local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"
+
+    local EXPECTED_FILE="$2/expected/deer-small-maxlevel65535.ppm"
+
+    test_file "$1" "$COMMAND" "$EXPECTED_FILE" "$OUTPUT_FILE"
+}
+
+maxlevel_zero() {
+    local INPUT_FILE="$photo.ppm"
+    local OUTPUT_FILE="out.ppm"
+    local OPERATION="maxlevel"
+    local LEVEL="0"
+    local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"
+
+    local EXPECTED_ERROR="Error: Invalid maxlevel: 0"
+
+    test_error "$1" "$COMMAND" "$EXPECTED_ERROR"
+}
+

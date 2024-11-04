@@ -59,8 +59,8 @@ compare_files() {
     local expected_file="$2"
     local output_file="$3"
 
-    if [ ! -f "$expected_file" ]; then
-        # No expected file, return success
+    if [ -z "$expected_file" ]; then
+        # No expected file, nothing to compare
         return 0
     fi
 

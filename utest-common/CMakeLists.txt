@@ -4,7 +4,8 @@ add_executable(utest-common
 progargs_test.cpp
 binaryio_test.cpp
 parsebinary_test.cpp
-validatefile_test.cpp)
+validatefile_test.cpp
+aux_test.cpp)
 # Library dependencies
 target_link_libraries (utest-common
 PRIVATE

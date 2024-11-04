@@ -2,12 +2,12 @@
 
 maxlevel_normal() { 
     local INPUT_FILE="$2/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/output/deer-small-maxlevel10.ppm"
+    local OUTPUT_FILE="$2/output/maxlevel-deer-small-65535.ppm"
     local OPERATION="maxlevel"
-    local LEVEL="10"
+    local LEVEL="65535"
     local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"
 
-    local EXPECTED_FILE="$2/expected/deer-small-maxlevel10.ppm"
+    local EXPECTED_FILE="$2/expected/maxlevel/deer-small-65535.ppm"
 
     test_file "$1" "$COMMAND" "$EXPECTED_FILE" "$OUTPUT_FILE"
 }

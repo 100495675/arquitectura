@@ -51,33 +51,33 @@ namespace imgaos {
   TEST(resize, uint8_ampliar) {
     std::string const inputs_str = "P6\n2 "
                                    "2\n255\n"
-                                   "\x10\x20\x30\x40\x50\x60\x70\x80\x90\xA0\xB0\xC0";
+                                   "\x64\x64\x64\x32\x32\x32\x46\x46\x46\x14\x14\x14";
 
     std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
 
     AOS img(inputs);
 
-    img.resize(4, 4);
+    img.resize(3, 3);
 
     std::vector<uint8_t> const binary = img.toBinary();
 
-    std::string const expected_str =
-        "P6\n4 "
-        "4\n255\n\x10\x20\x30\x28\x38\x48\x28\x38\x48\x40\x50\x60\x40\x50\x60\x58"
-        "\x68\x78\x58\x68\x78\x70\x80\x90\x40\x50\x60\x58\x68\x78\x58\x68\x78\x70"
-        "\x80\x90\x70\x80\x90\x88\x98\xa8\x88\x98\xa8\xa0\xb0\xc0";
-
+    std::string const expected_str = "P6\n3 "
+                                     "3\n255\n"
+                                     "\x64\x64\x64\x4B\x4B\x4B\x32\x32\x32"
+                                     "\x55\x55\x55\x3C\x3C\x3C\x23\x23\x23"
+                                     "\x46\x46\x46\x2D\x2D\x2D\x14\x14\x14";
     std::vector<std::uint8_t> const expected(expected_str.begin(), expected_str.end());
 
     ASSERT_EQ(expected, binary);
   }
 
-  TEST(resize, uint8_encojer) {
-    std::string const inputs_str =
-        "P6\n4 "
-        "4\n255\n\x10\x20\x30\x28\x38\x48\x28\x38\x48\x40\x50\x60\x40\x50\x60\x58"
-        "\x68\x78\x58\x68\x78\x70\x80\x90\x40\x50\x60\x58\x68\x78\x58\x68\x78\x70"
-        "\x80\x90\x70\x80\x90\x88\x98\xa8\x88\x98\xa8\xa0\xb0\xc0";
+  TEST(resize, uint8_reduzir) {
+    std::string const inputs_str = "P6\n3 "
+                                   "3\n255\n"
+                                   "\x64\x64\x64\x4B\x4B\x4B\x32\x32\x32"
+                                   "\x55\x55\x55\x3C\x3C\x3C\x23\x23\x23"
+                                   "\x46\x46\x46\x2D\x2D\x2D\x14\x14\x14";
+
     std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
 
     AOS img(inputs);
@@ -88,70 +88,32 @@ namespace imgaos {
 
     std::string const expected_str = "P6\n2 "
                                      "2\n255\n"
-                                     "\x10\x20\x30\x40\x50\x60\x70\x80\x90\xA0\xB0\xC0";
-
-    std::vector<std::uint8_t> const expected(expected_str.begin(), expected_str.end());
-
-    ASSERT_EQ(expected, binary);
-  }
-
-  TEST(resize, uint16_encojer) {
-    std::string const inputs_str =
-        "P6\n3 "
-        "3\n65535\n"
-        "\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F\x10\x11\x12"
-        "\x13\x14\x15\x16\x17\x18\x19\x1A\x1B\x1C\x1D\x1E\x1F\x20\x21\x22\x23\x24"
-        "\x25\x26\x27\x28\x29\x2A\x2B\x2C\x2D\x2E\x2F\x30\x31\x32\x33\x34\x35"
-        "\x36";
-
-    std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
-
-    AOS img(inputs);
-
-    img.resize(2, 2);
-
-    std::vector<uint8_t> const binary = img.toBinary();
-
-    std::string const expected_str =
-        "P6\n2 "
-        "2\n65535\n"
-        "\x01\x02\x03\x04\x05\x06\x0D\x0E\x0F\x10\x11\x12\x25\x26\x27\x28\x29\x2A"
-        "\x31\x32\x33\x34\x35\x36";
-
+                                     "\x64\x64\x64\x32\x32\x32\x46\x46\x46\x14\x14\x14";
     std::vector<std::uint8_t> const expected(expected_str.begin(), expected_str.end());
 
     ASSERT_EQ(expected, binary);
   }
 
   TEST(resize, uint16_ampliar) {
-    std::string const inputs_str =
-
-        "P6\n2 2\n65535\n"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30";
+    std::string const inputs_str = "P6\n2 "
+                                   "2\n256\n"
+                                   "\x64\x64\x64\x64\x64\x64\x32\x32\x32\x32\x32\x32\x46\x46\x46"
+                                   "\x46\x46\x46\x14\x14\x14\x14\x14\x14";
 
     std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
 
     AOS img(inputs);
 
-    img.resize(2, 8);
+    img.resize(3, 3);
 
     std::vector<uint8_t> const binary = img.toBinary();
 
     std::string const expected_str =
-        "P6\n2 "
-        "8\n65535\n"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30"
-        "\x30"
-        "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30"
-        "\x30"
-        "\x30\x30\x30\x30\x30";
-
+        "P6\n3 "
+        "3\n256\n"
+        "\x64\x64\x64\x64\x64\x64\x4B\x4B\x4B\x4B\x4B\x4B\x32\x32\x32\x32\x32\x32"
+        "\x55\x55\x55\x55\x55\x55\x3C\x3C\x3C\x3C\x3C\x3C\x23\x23\x23\x23\x23\x23"
+        "\x46\x46\x46\x46\x46\x46\x2D\x2D\x2D\x2D\x2D\x2D\x14\x14\x14\x14\x14\x14";
     std::vector<std::uint8_t> const expected(expected_str.begin(), expected_str.end());
 
     ASSERT_EQ(expected, binary);

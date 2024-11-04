@@ -35,8 +35,11 @@ namespace imgaos {
       void resize_generic(common::Width new_width, common::Height new_height);
 
       template <typename T>
-      pixel<T> interpolate_pixel(std::vector<pixel<T>> const & old_vector_data,
-                                 common::Size old_size, int new_x, int new_y);
+      pixel<T> calculate_pixel(std::vector<pixel<T>> const & old_vector_data, common::Size old_size,
+                               int new_x, int new_y);
+      template <typename T>
+      pixel<T> interpolate_pixel(std::tuple<float, float> const & positions, float pos,
+                                 pixel<T> const & pixel_1, pixel<T> const & pixel_2);
       template <typename T>
       void cut_freq_generic(int number);
       template <typename T>

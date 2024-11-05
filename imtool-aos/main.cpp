@@ -68,13 +68,9 @@ int main(int argc, char const * argv[]) {
       case InputArgs::Command::CutFreq:
         cut_freq(args);
         break;
-
       case InputArgs::Command::Compress:
         compress(args);
         break;
-
-      default:
-        throw std::invalid_argument("no he programado eso aun");
     }
 
     return 0;

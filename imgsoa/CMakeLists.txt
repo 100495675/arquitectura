@@ -2,6 +2,7 @@
 add_library(imgsoa
 imagesoa.cpp
 max_level.cpp
+resize.cpp
 #other1.cpp
 #other2.cpp
 )

@@ -29,11 +29,21 @@ namespace imgsoa {
       void write_pixels(std::vector<uint8_t> & binary) const;
       template <typename T, typename U>
       void max_level_generic(int level);
+      template <typename T>
+      void resize_generic(common::Width new_width, common::Height new_height);
+
+      template <typename Color>
+      Color calculate_color(std::vector<Color> const & old_vector_data, common::Size old_size,
+                            int new_x, int new_y);
+
+      template <typename Color>
+      Color interpolate_color(std::tuple<float, float> const & positions, float pos,
+                              Color const & color_1, Color const & color_2);
 
     public:
       void max_level(int level);
-      // void resize(int width, int height);
-      //  void cut_freq(int freq);
+      void resize(int width, int height);
+      // void cut_freq(int freq);
       //[[nodiscard]] std::vector<uint8_t> compress() const;
       SOA(std::vector<uint8_t> const & binary);
       [[nodiscard]] std::vector<uint8_t> toBinary() const;

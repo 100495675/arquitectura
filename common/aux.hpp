@@ -34,6 +34,7 @@ namespace common {
   template <typename T>
   struct Red {
     public:
+      using value_type = T;
       Red(T value);
       [[nodiscard]] T getValue() const;
 
@@ -44,6 +45,7 @@ namespace common {
   template <typename T>
   struct Green {
     public:
+      using value_type = T;
       Green(T value);
       [[nodiscard]] T getValue() const;
 
@@ -54,6 +56,7 @@ namespace common {
   template <typename T>
   struct Blue {
     public:
+      using value_type = T;
       Blue(T value);
       [[nodiscard]] T getValue() const;
 

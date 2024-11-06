@@ -26,6 +26,7 @@ namespace imgsoa {
 
       void process_uint8_pixels(std::string const & pixel_data, size_t total_pixels);
       void process_uint16_pixels(std::string const & pixel_data, size_t total_pixels);
+      void write_pixels(std::vector<uint8_t> & binary) const;
 
     public:
       // void max_level(int level);
@@ -33,7 +34,7 @@ namespace imgsoa {
       // void cut_freq(int freq);
       //[[nodiscard]] std::vector<uint8_t> compress() const;
       SOA(std::vector<uint8_t> const & binary);
-      //[[nodiscard]] std::vector<uint8_t> toBinary() const;
+      [[nodiscard]] std::vector<uint8_t> toBinary() const;
 
       [[nodiscard]] int getWidth() const;
       [[nodiscard]] int getHeight() const;

@@ -97,4 +97,45 @@ namespace imgsoa {
     blue  = std::move(vector_blue);
   }
 
+  std::vector<uint8_t> SOA::toBinary() const {
+    std::string const header = "P6\n" + std::to_string(width) + " " + std::to_string(height) +
+                               "\n" + std::to_string(maxlevel) + "\n";
+    std::vector<uint8_t> binary;
+
+    size_t const pixel_size       = static_cast<size_t>(type) * 3;
+    size_t const number_of_pixels = static_cast<size_t>(width) * static_cast<size_t>(height);
+    binary.reserve(header.size() + number_of_pixels * pixel_size);
+
+    binary.insert(binary.begin(), header.begin(), header.end());
+
+    write_pixels(binary);
+
+    return binary;
+  }
+
+  void SOA::write_pixels(std::vector<uint8_t> & binary) const {
+    if (type == Type::UINT8) {
+      for (size_t i = 0; i < static_cast<size_t>(width) * static_cast<size_t>(height); i++) {
+        binary.push_back(std::get<std::vector<common::Red<uint8_t>>>(red)[i].getValue());
+        binary.push_back(std::get<std::vector<common::Green<uint8_t>>>(green)[i].getValue());
+        binary.push_back(std::get<std::vector<common::Blue<uint8_t>>>(blue)[i].getValue());
+      }
+    } else {
+      for (size_t i = 0; i < static_cast<size_t>(width) * static_cast<size_t>(height); i++) {
+        binary.push_back(static_cast<uint8_t>(
+            std::get<std::vector<common::Red<uint16_t>>>(red)[i].getValue() >> UINT8_WIDTH));
+        binary.push_back(static_cast<uint8_t>(
+            std::get<std::vector<common::Red<uint16_t>>>(red)[i].getValue() & UINT8_MAX));
+        binary.push_back(static_cast<uint8_t>(
+            std::get<std::vector<common::Green<uint16_t>>>(green)[i].getValue() >> UINT8_WIDTH));
+        binary.push_back(static_cast<uint8_t>(
+            std::get<std::vector<common::Green<uint16_t>>>(green)[i].getValue() & UINT8_MAX));
+        binary.push_back(static_cast<uint8_t>(
+            std::get<std::vector<common::Blue<uint16_t>>>(blue)[i].getValue() >> UINT8_WIDTH));
+        binary.push_back(static_cast<uint8_t>(
+            std::get<std::vector<common::Blue<uint16_t>>>(blue)[i].getValue() & UINT8_MAX));
+      }
+    }
+  }
+
 }  // namespace imgsoa

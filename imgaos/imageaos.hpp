@@ -70,7 +70,7 @@ namespace imgaos {
   template <typename T>
   void AOS::addPixelToTable(pixel<T> const & pixel, std::vector<uint8_t> & binary,
                             size_t & index) const {
-    if (std::is_same<T, uint8_t>::value) {
+    if (std::is_same_v<T, uint8_t>) {
       binary[index++] = static_cast<uint8_t>(pixel.getR());
       binary[index++] = static_cast<uint8_t>(pixel.getG());
       binary[index++] = static_cast<uint8_t>(pixel.getB());

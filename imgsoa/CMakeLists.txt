@@ -6,5 +6,6 @@ resize.cpp
 #other1.cpp
 #other2.cpp
 )
+target_link_libraries(imgaos PRIVATE common)
 # Use this line only if you have dependencies from this library to GSL
 # target_link_libraries (imgaos PRIVATE common Microsoft.GSL::GSL)

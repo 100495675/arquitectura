@@ -57,9 +57,9 @@ namespace imgaos {
 
     for (size_t i = 0; i < total_pixels; i++) {
       pixel<uint8_t> const new_pixel(
-          common::Red<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3])),
-          common::Green<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3 + 1])),
-          common::Blue<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3 + 2])));
+          common::Red<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3)])),
+          common::Green<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3) + 1])),
+          common::Blue<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3) + 2])));
       vector_data.push_back(new_pixel);
     }
 
@@ -72,11 +72,11 @@ namespace imgaos {
 
     for (size_t i = 0; i < total_pixels; i++) {
       pixel<uint16_t> const new_pixel(common::Red<uint16_t>(static_cast<uint16_t>(
-                                          (pixel_data[i * 6] << 8) | pixel_data[i * 6 + 1])),
+                                          (pixel_data[(i * 6)] << 8) | pixel_data[(i * 6) + 1])),
                                       common::Green<uint16_t>(static_cast<uint16_t>(
-                                          (pixel_data[i * 6 + 2] << 8) | pixel_data[i * 6 + 3])),
+                                          (pixel_data[(i * 6) + 2] << 8) | pixel_data[(i * 6) + 3])),
                                       common::Blue<uint16_t>(static_cast<uint16_t>(
-                                          (pixel_data[i * 6 + 4] << 8) | pixel_data[i * 6 + 5])));
+                                          (pixel_data[(i * 6) + 4] << 8) | pixel_data[(i * 6) + 5])));
       vector_data.push_back(new_pixel);
     }
 
@@ -90,7 +90,7 @@ namespace imgaos {
 
     size_t const pixel_size       = static_cast<size_t>(type) * 3;
     size_t const number_of_pixels = static_cast<size_t>(width) * static_cast<size_t>(height);
-    binary.reserve(header.size() + number_of_pixels * pixel_size);
+    binary.reserve(header.size() + (number_of_pixels * pixel_size));
 
     binary.insert(binary.begin(), header.begin(), header.end());
 

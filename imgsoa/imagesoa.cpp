@@ -59,9 +59,9 @@ namespace imgsoa {
     vector_blue.reserve(total_pixels);
 
     for (size_t i = 0; i < total_pixels; i++) {
-      auto red_value   = common::Red<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3]));
-      auto green_value = common::Green<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3 + 1]));
-      auto blue_value  = common::Blue<uint8_t>(static_cast<uint8_t>(pixel_data[i * 3 + 2]));
+      auto red_value   = common::Red<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3)]));
+      auto green_value = common::Green<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3) + 1]));
+      auto blue_value  = common::Blue<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3) + 2]));
       vector_red.push_back(red_value);
       vector_green.push_back(green_value);
       vector_blue.push_back(blue_value);
@@ -82,11 +82,11 @@ namespace imgsoa {
 
     for (size_t i = 0; i < total_pixels; i++) {
       auto red_value = common::Red<uint16_t>(
-          static_cast<uint16_t>((pixel_data[i * 3 * 2] << (4 + 4)) | pixel_data[i * 3 * 2 + 1]));
+          static_cast<uint16_t>((pixel_data[(i * 3 * 2)] << (4 + 4)) | pixel_data[(i * 3 * 2) + 1]));
       auto green_value = common::Green<uint16_t>(static_cast<uint16_t>(
-          (pixel_data[i * 3 * 2 + 2] << (4 + 4)) | pixel_data[i * 3 * 2 + 3]));
+          (pixel_data[(i * 3 * 2) + 2] << (4 + 4)) | pixel_data[(i * 3 * 2) + 3]));
       auto blue_value  = common::Blue<uint16_t>(static_cast<uint16_t>(
-          (pixel_data[i * 3 * 2 + 4] << (4 + 4)) | pixel_data[i * 3 * 2 + 4 + 1]));
+          (pixel_data[(i * 3 * 2) + 4] << (4 + 4)) | pixel_data[(i * 3 * 2) + 4 + 1]));
       vector_red.push_back(red_value);
       vector_green.push_back(green_value);
       vector_blue.push_back(blue_value);
@@ -104,7 +104,7 @@ namespace imgsoa {
 
     size_t const pixel_size       = static_cast<size_t>(type) * 3;
     size_t const number_of_pixels = static_cast<size_t>(width) * static_cast<size_t>(height);
-    binary.reserve(header.size() + number_of_pixels * pixel_size);
+    binary.reserve(header.size() + (number_of_pixels * pixel_size));
 
     binary.insert(binary.begin(), header.begin(), header.end());
 

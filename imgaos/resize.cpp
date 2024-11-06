@@ -55,13 +55,13 @@ namespace imgaos {
     float const y_2    = std::ceil(old_y);
     size_t const width = static_cast<size_t>(old_size.getWidth().getValue());
     pixel<T> const pixel_11 =
-        old_vector_data[static_cast<size_t>(y_1) * width + static_cast<size_t>(x_1)];
+        old_vector_data[(static_cast<size_t>(y_1) * width) + static_cast<size_t>(x_1)];
     pixel<T> const pixel_21 =
-        old_vector_data[static_cast<size_t>(y_1) * width + static_cast<size_t>(x_2)];
+        old_vector_data[(static_cast<size_t>(y_1) * width) + static_cast<size_t>(x_2)];
     pixel<T> const pixel_12 =
-        old_vector_data[static_cast<size_t>(y_2) * width + static_cast<size_t>(x_1)];
+        old_vector_data[(static_cast<size_t>(y_2) * width) + static_cast<size_t>(x_1)];
     pixel<T> const pixel_22 =
-        old_vector_data[static_cast<size_t>(y_2) * width + static_cast<size_t>(x_2)];
+        old_vector_data[(static_cast<size_t>(y_2) * width) + static_cast<size_t>(x_2)];
 
     auto const pixel_1 = interpolate_pixel(std::make_tuple(x_1, x_2), old_x, pixel_11, pixel_21);
     auto const pixel_2 = interpolate_pixel(std::make_tuple(x_1, x_2), old_x, pixel_12, pixel_22);
@@ -74,12 +74,12 @@ namespace imgaos {
     auto const [pos1, pos2] = positions;
     auto const delta        = pos2 - pos1;
     if (delta == 0) { return pixel_1; }
-    auto const red   = static_cast<T>((pos2 - pos) / delta * pixel_1.getR() +
-                                      (pos - pos1) / delta * pixel_2.getR());
-    auto const green = static_cast<T>((pos2 - pos) / delta * pixel_1.getG() +
-                                      (pos - pos1) / delta * pixel_2.getG());
-    auto const blue  = static_cast<T>((pos2 - pos) / delta * pixel_1.getB() +
-                                      (pos - pos1) / delta * pixel_2.getB());
+    auto const red   = static_cast<T>(((pos2 - pos) / delta * pixel_1.getR()) +
+                                      ((pos - pos1) / delta * pixel_2.getR()));
+    auto const green = static_cast<T>(((pos2 - pos) / delta * pixel_1.getG()) +
+                                      ((pos - pos1) / delta * pixel_2.getG()));
+    auto const blue  = static_cast<T>(((pos2 - pos) / delta * pixel_1.getB()) +
+                                      ((pos - pos1) / delta * pixel_2.getB()));
     return pixel<T>(red, green, blue);
   }
 }  // namespace imgaos

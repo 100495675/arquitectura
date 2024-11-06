@@ -74,13 +74,13 @@ namespace imgsoa {
     float const y_2    = std::ceil(old_y);
     size_t const width = static_cast<size_t>(old_size.getWidth().getValue());
     Color const color_11 =
-        old_vector_data[static_cast<size_t>(y_1) * width + static_cast<size_t>(x_1)];
+        old_vector_data[(static_cast<size_t>(y_1) * width) + static_cast<size_t>(x_1)];
     Color const color_21 =
-        old_vector_data[static_cast<size_t>(y_1) * width + static_cast<size_t>(x_2)];
+        old_vector_data[(static_cast<size_t>(y_1) * width) + static_cast<size_t>(x_2)];
     Color const color_12 =
-        old_vector_data[static_cast<size_t>(y_2) * width + static_cast<size_t>(x_1)];
+        old_vector_data[(static_cast<size_t>(y_2) * width) + static_cast<size_t>(x_1)];
     Color const color_22 =
-        old_vector_data[static_cast<size_t>(y_2) * width + static_cast<size_t>(x_2)];
+        old_vector_data[(static_cast<size_t>(y_2) * width) + static_cast<size_t>(x_2)];
 
     auto const color_1 = interpolate_color(std::make_tuple(x_1, x_2), old_x, color_11, color_21);
     auto const color_2 = interpolate_color(std::make_tuple(x_1, x_2), old_x, color_12, color_22);
@@ -94,7 +94,7 @@ namespace imgsoa {
     auto const delta        = pos2 - pos1;
     if (delta == 0) { return color_1; }
     auto const valor = static_cast<typename Color::value_type>(
-        (pos2 - pos) / delta * color_1.getValue() + (pos - pos1) / delta * color_2.getValue());
+        ((pos2 - pos) / delta * color_1.getValue()) + ((pos - pos1) / delta * color_2.getValue()));
     return Color(valor);
   }
 }  // namespace imgsoa

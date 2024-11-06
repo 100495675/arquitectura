@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <iostream>
+#include <algorithm>
 #include <unordered_map>
 
 namespace imgaos {
@@ -31,14 +32,14 @@ namespace imgaos {
     std::vector<uint8_t> binary;
     binary.reserve(header.size() + table_size + pixel_size);
     binary.resize(binary.capacity());
-    std::copy(header.begin(), header.end(), binary.begin());
+    std::ranges::copy(header.begin(), header.end(), binary.begin());
     size_t index       = header.size();
     size_t table_index = 0;
     for (auto const & [pixel, freqs] : freq) {
       addPixelToTable<T>(pixel, binary, index);
       for (auto const & position : freqs.second) {
         // no estoy seguro de que esto funcione :P
-        std::memcpy(&binary[header.size() + table_size + position * pixel_byte_size], &table_index,
+        std::memcpy(&binary[header.size() + table_size + (position * pixel_byte_size)], &table_index,
                     pixel_byte_size);
       }
       table_index++;

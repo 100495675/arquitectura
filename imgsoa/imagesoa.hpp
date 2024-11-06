@@ -5,7 +5,6 @@
 #include <cstdint>
 #include <cstring>
 #include <forward_list>
-#include <gtest/gtest_prod.h>
 #include <string>
 #include <variant>
 #include <vector>

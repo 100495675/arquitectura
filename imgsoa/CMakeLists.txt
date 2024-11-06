@@ -1,6 +1,7 @@
 # Add to this list all files related to imgaos library
 add_library(imgsoa
 imagesoa.cpp
+max_level.cpp
 #other1.cpp
 #other2.cpp
 )

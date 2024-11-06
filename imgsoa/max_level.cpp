@@ -33,12 +33,14 @@ namespace imgsoa {
   void SOA::max_level_generic(int level) {
     if constexpr (std::is_same_v<T, U>) {
       for (size_t i = 0; i < static_cast<size_t>(width) * static_cast<size_t>(height); i++) {
-        T new_r = std::get<std::vector<common::Red<T>>>(red)[i].getValue() * level / maxlevel;
-        T new_g = std::get<std::vector<common::Green<T>>>(green)[i].getValue() * level / maxlevel;
-        T new_b = std::get<std::vector<common::Green<T>>>(green)[i].getValue() * level / maxlevel;
-        std::get<std::vector<common::Red<T>>>(red)[i]     = common::Red<T>(new_r);
-        std::get<std::vector<common::Green<T>>>(green)[i] = common::Green<T>(new_g);
-        std::get<std::vector<common::Blue<T>>>(blue)[i]   = common::Blue<T>(new_b);
+        auto new_r = std::get<std::vector<common::Red<T>>>(red)[i].getValue() * level / maxlevel;
+        auto new_g =
+            std::get<std::vector<common::Green<T>>>(green)[i].getValue() * level / maxlevel;
+        auto new_b =
+            std::get<std::vector<common::Green<T>>>(green)[i].getValue() * level / maxlevel;
+        std::get<std::vector<common::Red<T>>>(red)[i]     = common::Red<T>(static_cast<T>(new_r));
+        std::get<std::vector<common::Green<T>>>(green)[i] = common::Green<T>(static_cast<T>(new_g));
+        std::get<std::vector<common::Blue<T>>>(blue)[i]   = common::Blue<T>(static_cast<T>(new_b));
       }
       maxlevel = level;
     } else {
@@ -49,12 +51,15 @@ namespace imgsoa {
       new_green_vector.reserve(static_cast<size_t>(width) * static_cast<size_t>(height));
       new_blue_vector.reserve(static_cast<size_t>(width) * static_cast<size_t>(height));
       for (size_t i = 0; i < static_cast<size_t>(width) * static_cast<size_t>(height); i++) {
-        U new_r = std::get<std::vector<common::Red<T>>>(red)[i].getValue() * level / maxlevel;
-        U new_g = std::get<std::vector<common::Green<T>>>(green)[i].getValue() * level / maxlevel;
-        U new_b = std::get<std::vector<common::Green<T>>>(green)[i].getValue() * level / maxlevel;
-        new_red_vector.push_back(common::Red<U>(new_r));
-        new_green_vector.push_back(common::Green<U>(new_g));
-        new_blue_vector.push_back(common::Blue<U>(new_b));
+        auto new_r = static_cast<U>(std::get<std::vector<common::Red<T>>>(red)[i].getValue()) *
+                     level / maxlevel;
+        auto new_g = static_cast<U>(std::get<std::vector<common::Green<T>>>(green)[i].getValue()) *
+                     level / maxlevel;
+        auto new_b = static_cast<U>(std::get<std::vector<common::Green<T>>>(green)[i].getValue()) *
+                     level / maxlevel;
+        new_red_vector.push_back(common::Red<U>(static_cast<U>(new_r)));
+        new_green_vector.push_back(common::Green<U>(static_cast<U>(new_g)));
+        new_blue_vector.push_back(common::Blue<U>(static_cast<U>(new_b)));
       }
       red      = std::move(new_red_vector);
       green    = std::move(new_green_vector);

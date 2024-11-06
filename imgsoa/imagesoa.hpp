@@ -33,7 +33,7 @@ namespace imgsoa {
     public:
       void max_level(int level);
       // void resize(int width, int height);
-      // void cut_freq(int freq);
+      //  void cut_freq(int freq);
       //[[nodiscard]] std::vector<uint8_t> compress() const;
       SOA(std::vector<uint8_t> const & binary);
       [[nodiscard]] std::vector<uint8_t> toBinary() const;

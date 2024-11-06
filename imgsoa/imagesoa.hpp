@@ -27,9 +27,11 @@ namespace imgsoa {
       void process_uint8_pixels(std::string const & pixel_data, size_t total_pixels);
       void process_uint16_pixels(std::string const & pixel_data, size_t total_pixels);
       void write_pixels(std::vector<uint8_t> & binary) const;
+      template <typename T, typename U>
+      void max_level_generic(int level);
 
     public:
-      // void max_level(int level);
+      void max_level(int level);
       // void resize(int width, int height);
       // void cut_freq(int freq);
       //[[nodiscard]] std::vector<uint8_t> compress() const;

@@ -43,10 +43,8 @@ namespace imgaos {
       template <typename T>
       void cut_freq_generic(int number);
       template <typename T>
-      void sort_first_n(
-          std::vector<std::pair<pixel<T>, std::pair<size_t, std::forward_list<size_t>>>> &
-              freq_vector,
-          int number);
+      void sort_first_n(std::vector<std::pair<pixel<T>, std::vector<size_t>>> & freq_vector,
+                        int number);
       template <typename T>
       void addPixelToTable(pixel<T> const & pixel, std::vector<uint8_t> & binary,
                            size_t & index) const;

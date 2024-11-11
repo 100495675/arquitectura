@@ -1,6 +1,7 @@
 #ifndef IMGSOA_HPP
 #define IMGSOA_HPP
 #include "../common/colors.hpp"
+#include "../common/pixel.hpp"
 #include "../common/sizes.hpp"
 
 #include <cstdint>
@@ -40,10 +41,19 @@ namespace imgsoa {
       Color interpolate_color(std::tuple<float, float> const & positions, float pos,
                               Color const & color_1, Color const & color_2);
 
+      template <typename T>
+      void cut_freq_generic(int number);
+      template <typename T>
+      void sort_first_n(std::vector<std::pair<common::pixel<T>, std::vector<size_t>>> & freq_vector,
+                        int number);
+      template <typename T>
+      void addPixelToTable(common::pixel<T> const & pixel, std::vector<uint8_t> & binary,
+                           size_t & index) const;
+
     public:
       void max_level(int level);
       void resize(int width, int height);
-      // void cut_freq(int freq);
+      void cut_freq(int freq);
       //[[nodiscard]] std::vector<uint8_t> compress() const;
       SOA(std::vector<uint8_t> const & binary);
       [[nodiscard]] std::vector<uint8_t> toBinary() const;

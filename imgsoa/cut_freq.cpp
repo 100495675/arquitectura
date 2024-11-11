@@ -1,4 +1,5 @@
-#include "imageaos.hpp"
+#include "../common/pixel.hpp"
+#include "imagesoa.hpp"
 
 #include <algorithm>
 #include <chrono>
@@ -13,9 +14,9 @@
 #include <utility>
 #include <vector>
 
-namespace imgaos {
+namespace imgsoa {
 
-  void AOS::cut_freq(int new_freq) {
+  void SOA::cut_freq(int new_freq) {
     if (new_freq < 0) { throw std::invalid_argument("Invalid cutfreq"); }
     if (type == Type::UINT8) {
       cut_freq_generic<uint8_t>(new_freq);
@@ -26,7 +27,7 @@ namespace imgaos {
 
   template <typename T>
   void
-      AOS::sort_first_n(std::vector<std::pair<common::pixel<T>, std::vector<size_t>>> & freq_vector,
+      SOA::sort_first_n(std::vector<std::pair<common::pixel<T>, std::vector<size_t>>> & freq_vector,
                         int number) {
     std::partial_sort(freq_vector.begin(), freq_vector.begin() + number, freq_vector.end(),
                       [](auto const & entry1, auto const & entry2) {
@@ -44,10 +45,16 @@ namespace imgaos {
   }
 
   template <typename T>
-  void AOS::cut_freq_generic(int number) {
-    std::vector<common::pixel<T>> pixel_data = std::get<std::vector<common::pixel<T>>>(data);
+  void SOA::cut_freq_generic(int number) {
+    auto red_pixel_data   = std::get<std::vector<common::Red<T>>>(red);
+    auto green_pixel_data = std::get<std::vector<common::Green<T>>>(green);
+    auto blue_pixel_data  = std::get<std::vector<common::Blue<T>>>(blue);
     std::unordered_map<common::pixel<T>, std::vector<size_t>, common::PixelHash<T>> freq;
-    for (size_t i = 0; i < pixel_data.size(); i++) { freq[pixel_data[i]].push_back(i); }
+    for (size_t i = 0; i < red_pixel_data.size(); i++) {
+      auto const pixel =
+          common::pixel<T>(red_pixel_data[i], green_pixel_data[i], blue_pixel_data[i]);
+      freq[pixel].push_back(i);
+    }
     if (freq.size() <= static_cast<size_t>(number)) {
       throw std::invalid_argument("Invalid cutfreq");
     }
@@ -69,9 +76,14 @@ namespace imgaos {
         }
       }
       for (auto const & pos : freq_vector[i].second) {
-        pixel_data[pos] = freq_vector[closest_color_index].first;
+        auto const pixel      = freq_vector[closest_color_index].first;
+        red_pixel_data[pos]   = pixel.getR();
+        green_pixel_data[pos] = pixel.getG();
+        blue_pixel_data[pos]  = pixel.getB();
       }
     }
-    data = std::move(pixel_data);
+    red   = std::move(red_pixel_data);
+    green = std::move(green_pixel_data);
+    blue  = std::move(blue_pixel_data);
   }
-}  // namespace imgaos
+}  // namespace imgsoa

@@ -1,6 +1,7 @@
 #include "imageaos.hpp"
 
 #include "../common/parsebinary.hpp"
+#include "../common/pixel.hpp"
 #include "../common/sizes.hpp"
 #include "../common/validatefile.hpp"
 
@@ -52,11 +53,11 @@ namespace imgaos {
   }
 
   void AOS::process_uint8_pixels(std::string const & pixel_data, size_t total_pixels) {
-    std::vector<pixel<uint8_t>> vector_data;
+    std::vector<common::pixel<uint8_t>> vector_data;
     vector_data.reserve(total_pixels);
 
     for (size_t i = 0; i < total_pixels; i++) {
-      pixel<uint8_t> const new_pixel(
+      common::pixel<uint8_t> const new_pixel(
           common::Red<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3)])),
           common::Green<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3) + 1])),
           common::Blue<uint8_t>(static_cast<uint8_t>(pixel_data[(i * 3) + 2])));
@@ -67,11 +68,11 @@ namespace imgaos {
   }
 
   void AOS::process_uint16_pixels(std::string const & pixel_data, size_t total_pixels) {
-    std::vector<pixel<uint16_t>> vector_data;
+    std::vector<common::pixel<uint16_t>> vector_data;
     vector_data.reserve(total_pixels);
 
     for (size_t i = 0; i < total_pixels; i++) {
-      pixel<uint16_t> const new_pixel(
+      common::pixel<uint16_t> const new_pixel(
           common::Red<uint16_t>(
               static_cast<uint16_t>((pixel_data[(i * 6)] << 8) | pixel_data[(i * 6) + 1])),
           common::Green<uint16_t>(
@@ -102,11 +103,11 @@ namespace imgaos {
 
   void AOS::write_pixels(std::vector<uint8_t> & binary) const {
     if (type == Type::UINT8) {
-      for (auto const & my_pixel : std::get<std::vector<pixel<uint8_t>>>(data)) {
+      for (auto const & my_pixel : std::get<std::vector<common::pixel<uint8_t>>>(data)) {
         my_pixel.write_to_binary(binary);
       }
     } else {
-      for (auto const & my_pixel : std::get<std::vector<pixel<uint16_t>>>(data)) {
+      for (auto const & my_pixel : std::get<std::vector<common::pixel<uint16_t>>>(data)) {
         my_pixel.write_to_binary(binary);
       }
     }

@@ -1,15 +1,17 @@
 #include "imageaos.hpp"
 
+#include <algorithm>
 #include <cstring>
 #include <iostream>
-#include <algorithm>
 #include <unordered_map>
 
 namespace imgaos {
   template <typename T>
   std::vector<uint8_t> AOS::compress_generic() const {
-    auto pixel_data = std::get<std::vector<pixel<T>>>(data);
-    std::unordered_map<pixel<T>, std::pair<size_t, std::forward_list<size_t>>, PixelHash<T>> freq;
+    auto pixel_data = std::get<std::vector<common::pixel<T>>>(data);
+    std::unordered_map<common::pixel<T>, std::pair<size_t, std::forward_list<size_t>>,
+                       common::PixelHash<T>>
+        freq;
     freq.reserve(pixel_data.size() / 2);
     for (size_t i = 0; i < pixel_data.size(); i++) {
       freq[pixel_data[i]].first++;
@@ -39,12 +41,11 @@ namespace imgaos {
       addPixelToTable<T>(pixel, binary, index);
       for (auto const & position : freqs.second) {
         // no estoy seguro de que esto funcione :P
-        std::memcpy(&binary[header.size() + table_size + (position * pixel_byte_size)], &table_index,
-                    pixel_byte_size);
+        std::memcpy(&binary[header.size() + table_size + (position * pixel_byte_size)],
+                    &table_index, pixel_byte_size);
       }
       table_index++;
     }
-    // for (auto const & coso : binary) { std::cout << std::hex << static_cast<int>(coso) << ", "; }
     return binary;
   }
 

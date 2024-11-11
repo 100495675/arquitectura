@@ -29,7 +29,7 @@ namespace imgaos {
     ASSERT_EQ(255, img.getMaxLevel());
     ASSERT_EQ(AOS::Type::UINT8, img.type);
 
-    std::vector<pixel<uint8_t>> const expected = {
+    std::vector<common::pixel<uint8_t>> const expected = {
       {0x01, 0x02, 0x03},
       {0x04, 0x05, 0x06},
       {0x07, 0x08, 0x09},
@@ -48,7 +48,7 @@ namespace imgaos {
       {0x2E, 0x2F, 0x30},
     };
 
-    ASSERT_EQ(expected, std::get<std::vector<pixel<uint8_t>>>(img.data));
+    ASSERT_EQ(expected, std::get<std::vector<common::pixel<uint8_t>>>(img.data));
   }
 
   TEST(imgaos, normal_uint16) {
@@ -67,7 +67,7 @@ namespace imgaos {
     ASSERT_EQ(256, img.getMaxLevel());
     ASSERT_EQ(AOS::Type::UINT16, img.type);
 
-    std::vector<pixel<uint16_t>> const expected = {
+    std::vector<common::pixel<uint16_t>> const expected = {
       {0x0102, 0x0304, 0x0506},
       {0x0708, 0x090A, 0x0B0C},
       {0x0D0E, 0x0F10, 0x1112},
@@ -77,7 +77,7 @@ namespace imgaos {
       {0x2526, 0x2728, 0x292A},
       {0x2B2C, 0x2D2E, 0x2F30},
     };
-    auto const & pixel_vector = std::get<std::vector<pixel<uint16_t>>>(img.data);
+    auto const & pixel_vector = std::get<std::vector<common::pixel<uint16_t>>>(img.data);
 
     ASSERT_EQ(expected, pixel_vector);
   }

@@ -3,6 +3,7 @@ add_library(imgsoa
 imagesoa.cpp
 max_level.cpp
 resize.cpp
+cut_freq.cpp
 #other1.cpp
 #other2.cpp
 )

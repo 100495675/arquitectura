@@ -1,16 +1,16 @@
 #ifndef PIXEL_HPP
 #define PIXEL_HPP
-#include "../common/colors.hpp"
+#include "colors.hpp"
 
 #include <cstdint>
 #include <vector>
 
-namespace imgaos {
+namespace common {
 
   template <typename T>
   struct pixel {
     public:
-      pixel(common::Red<T> red, common::Green<T> green, common::Blue<T> blue);
+      pixel(Red<T> red, Green<T> green, Blue<T> blue);
       void write_to_binary(std::vector<uint8_t> & binary) const;
       bool operator==(pixel<T> const & other) const;
       [[nodiscard]] T getR() const;
@@ -30,7 +30,7 @@ namespace imgaos {
 
   // Implementation
   template <typename T>
-  pixel<T>::pixel(common::Red<T> red, common::Green<T> green, common::Blue<T> blue)
+  pixel<T>::pixel(Red<T> red, Green<T> green, Blue<T> blue)
     : red(red.getValue()), green(green.getValue()), blue(blue.getValue()) { }
 
   template <typename T>
@@ -75,5 +75,5 @@ namespace imgaos {
            (std::hash<T>()(pixel.getB()) << 2);
   }
 
-}  // namespace imgaos
+}  // namespace common
 #endif

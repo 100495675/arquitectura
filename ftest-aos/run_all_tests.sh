@@ -49,7 +49,11 @@ run_test resize_string_height
 run_test resize_cero_width
 run_test resize_cero_height
 
+run_test cut_freq_normal
+run_test cut_freq_zero
 run_test cut_freq_invalid_negative
+run_test cut_freq_demasiados_colores
+run_test cut_freq_string_value
 
 run_test compress_normal
 

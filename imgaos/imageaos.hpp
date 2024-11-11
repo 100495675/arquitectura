@@ -1,6 +1,6 @@
 #ifndef IMGAOS_HPP
 #define IMGAOS_HPP
-#include "../common/aux.hpp"
+#include "../common/sizes.hpp"
 #include "pixel.hpp"
 
 #include <cstdint>

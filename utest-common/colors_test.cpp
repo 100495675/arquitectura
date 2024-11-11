@@ -1,4 +1,4 @@
-#include "../common/aux.hpp"
+#include "../common/colors.hpp"
 
 #include <gtest/gtest.h>
 
@@ -10,32 +10,6 @@
 // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
 
 namespace common {
-
-  TEST(AuxTests, Width) {
-    int const widthValue = 10;
-    Width const width(widthValue);
-
-    EXPECT_EQ(width.getValue(), widthValue);
-  }
-
-  TEST(AuxTests, Height) {
-    int const heightValue = 20;
-    Height const height(heightValue);
-
-    EXPECT_EQ(height.getValue(), heightValue);
-  }
-
-  TEST(AuxTests, Size) {
-    int const widthValue  = 10;
-    int const heightValue = 20;
-
-    Width const width(widthValue);
-    Height const height(heightValue);
-    Size const size(height, width);
-
-    EXPECT_EQ(size.getHeight().getValue(), heightValue);
-    EXPECT_EQ(size.getWidth().getValue(), widthValue);
-  }
 
   TEST(AuxTests, RedUInt8) {
     uint8_t const redUInt8Value = 100;

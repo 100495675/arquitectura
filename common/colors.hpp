@@ -1,36 +1,7 @@
-#ifndef AUX_HPP
-#define AUX_HPP
+#ifndef COLORS_HPP
+#define COLORS_HPP
 
 namespace common {
-  class Width {
-    public:
-      explicit Width(int value);
-      [[nodiscard]] int getValue() const;
-
-    private:
-      int value;
-  };
-
-  class Height {
-    public:
-      explicit Height(int value);
-      [[nodiscard]] int getValue() const;
-
-    private:
-      int value;
-  };
-
-  class Size {
-    public:
-      explicit Size(Height height, Width width);
-      [[nodiscard]] Height getHeight() const;
-      [[nodiscard]] Width getWidth() const;
-
-    private:
-      Height height;
-      Width width;
-  };
-
   template <typename T>
   struct Red {
     public:

@@ -1,7 +1,7 @@
 
 #include "imagesoa.hpp"
 
-#include "../common/aux.hpp"
+#include "../common/colors.hpp"
 #include "../common/parsebinary.hpp"
 #include "../common/validatefile.hpp"
 
@@ -81,8 +81,8 @@ namespace imgsoa {
     vector_blue.reserve(total_pixels);
 
     for (size_t i = 0; i < total_pixels; i++) {
-      auto red_value = common::Red<uint16_t>(
-          static_cast<uint16_t>((pixel_data[(i * 3 * 2)] << (4 + 4)) | pixel_data[(i * 3 * 2) + 1]));
+      auto red_value   = common::Red<uint16_t>(static_cast<uint16_t>(
+          (pixel_data[(i * 3 * 2)] << (4 + 4)) | pixel_data[(i * 3 * 2) + 1]));
       auto green_value = common::Green<uint16_t>(static_cast<uint16_t>(
           (pixel_data[(i * 3 * 2) + 2] << (4 + 4)) | pixel_data[(i * 3 * 2) + 3]));
       auto blue_value  = common::Blue<uint16_t>(static_cast<uint16_t>(

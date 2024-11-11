@@ -1,4 +1,4 @@
-#include "../common/aux.hpp"
+#include "../common/sizes.hpp"
 #include "imageaos.hpp"
 
 #include <cmath>

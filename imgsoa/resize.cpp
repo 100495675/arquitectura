@@ -1,4 +1,4 @@
-#include "../common/aux.hpp"
+#include "../common/colors.hpp"
 #include "imagesoa.hpp"
 
 #include <cmath>

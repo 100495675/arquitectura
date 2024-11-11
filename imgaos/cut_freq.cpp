@@ -13,8 +13,6 @@
 #include <utility>
 #include <vector>
 
-// usar lo mismo que en common::red, green blue para ahorrarme algo de codigo en los generic
-
 namespace imgaos {
 
   void AOS::cut_freq(int new_freq) {
@@ -48,13 +46,10 @@ namespace imgaos {
   void AOS::cut_freq_generic(int number) {
     std::vector<pixel<T>> pixel_data = std::get<std::vector<pixel<T>>>(data);
     std::unordered_map<pixel<T>, std::vector<size_t>, PixelHash<T>> freq;
-    // habra que encontrar un optimo, este lo he puesto por poner algo
-    freq.reserve(pixel_data.size() / 2);
     for (size_t i = 0; i < pixel_data.size(); i++) { freq[pixel_data[i]].push_back(i); }
     if (freq.size() <= static_cast<size_t>(number)) {
       throw std::invalid_argument("Invalid cutfreq");
     }
-    // Ineficiente pero no hay mas, se tiene que clonar para hacer cosas
     std::vector<std::pair<pixel<T>, std::vector<size_t>>> freq_vector(freq.begin(), freq.end());
     sort_first_n(freq_vector, number);
     for (size_t i = 0; i < static_cast<size_t>(number); ++i) {

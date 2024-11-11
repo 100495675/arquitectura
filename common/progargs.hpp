@@ -1,7 +1,7 @@
 #ifndef PROGARGS_HPP
 #define PROGARGS_HPP
 
-#include "aux.hpp"
+#include "sizes.hpp"
 
 #include <cstdint>
 #include <cstdlib>

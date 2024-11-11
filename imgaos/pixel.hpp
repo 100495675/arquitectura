@@ -1,6 +1,6 @@
 #ifndef PIXEL_HPP
 #define PIXEL_HPP
-#include "../common/aux.hpp"
+#include "../common/colors.hpp"
 
 #include <cstdint>
 #include <vector>

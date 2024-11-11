@@ -1,6 +1,6 @@
 # Add to this list all files related to common library
 add_library(common
-aux.cpp
+sizes.cpp
 progargs.cpp
 binaryio.cpp
 parsebinary.cpp

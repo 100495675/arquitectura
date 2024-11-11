@@ -1,6 +1,7 @@
 #ifndef IMGSOA_HPP
 #define IMGSOA_HPP
-#include "../common/aux.hpp"
+#include "../common/colors.hpp"
+#include "../common/sizes.hpp"
 
 #include <cstdint>
 #include <cstring>

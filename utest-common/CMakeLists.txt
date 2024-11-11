@@ -5,7 +5,9 @@ progargs_test.cpp
 binaryio_test.cpp
 parsebinary_test.cpp
 validatefile_test.cpp
-aux_test.cpp)
+colors_test.cpp
+sizes_test.cpp
+)
 # Library dependencies
 target_link_libraries (utest-common
 PRIVATE

@@ -1,7 +1,7 @@
 #include "imageaos.hpp"
 
-#include "../common/aux.hpp"
 #include "../common/parsebinary.hpp"
+#include "../common/sizes.hpp"
 #include "../common/validatefile.hpp"
 
 #include <cstdint>
@@ -71,12 +71,13 @@ namespace imgaos {
     vector_data.reserve(total_pixels);
 
     for (size_t i = 0; i < total_pixels; i++) {
-      pixel<uint16_t> const new_pixel(common::Red<uint16_t>(static_cast<uint16_t>(
-                                          (pixel_data[(i * 6)] << 8) | pixel_data[(i * 6) + 1])),
-                                      common::Green<uint16_t>(static_cast<uint16_t>(
-                                          (pixel_data[(i * 6) + 2] << 8) | pixel_data[(i * 6) + 3])),
-                                      common::Blue<uint16_t>(static_cast<uint16_t>(
-                                          (pixel_data[(i * 6) + 4] << 8) | pixel_data[(i * 6) + 5])));
+      pixel<uint16_t> const new_pixel(
+          common::Red<uint16_t>(
+              static_cast<uint16_t>((pixel_data[(i * 6)] << 8) | pixel_data[(i * 6) + 1])),
+          common::Green<uint16_t>(
+              static_cast<uint16_t>((pixel_data[(i * 6) + 2] << 8) | pixel_data[(i * 6) + 3])),
+          common::Blue<uint16_t>(
+              static_cast<uint16_t>((pixel_data[(i * 6) + 4] << 8) | pixel_data[(i * 6) + 5])));
       vector_data.push_back(new_pixel);
     }
 

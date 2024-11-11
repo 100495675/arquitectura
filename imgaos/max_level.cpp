@@ -1,6 +1,7 @@
 #include "imgaos/imageaos.hpp"
 
 #include <cstdint>
+#include <iostream>
 #include <stdexcept>
 #include <vector>
 

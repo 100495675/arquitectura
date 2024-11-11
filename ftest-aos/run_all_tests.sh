@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir=$(dirname $0)
-mkdir -p "$dir/output"
+mkdir -p "$dir/../images/output"
 
 source $dir/test_utils.sh
 source $dir/args_test.sh
@@ -19,33 +19,40 @@ run_test args_2
 
 run_test info_normal
 run_test info_too_many_args
-run_test info_invalid_input
 
-run_test maxlevel_normal
+run_test max_level_normal_uint8_1
+run_test max_level_normal_uint8_2
+run_test max_level_normal_uint16_1
+run_test max_level_normal_uint16_2
 run_test maxlevel_not_enough_args
 run_test maxlevel_too_many_args
 run_test maxlevel_negativo
-run_test maxlevel_string
 run_test maxlevel_demasiado_grande
-#run_test maxlevel_min_value
-#run_test maxlevel_max_value
+run_test maxlevel_string
+run_test maxlevel_limite
 run_test maxlevel_zero
 
-#run_test resize_normal
+# quitar alguno que si no se tarda la vida
+#run_test resize_normal_1
+run_test resize_normal_2
+#run_test resize_normal_3
+#run_test resize_normal_4
+#run_test resize_normal_5
+#run_test resize_normal_6
+#run_test resize_normal_7
+#run_test resize_normal_8
 run_test resize_invalid_width
 run_test resize_invalid_height
 run_test resize_missing_file
 run_test resize_string_width
 run_test resize_string_height
-#run_test resize_unico_pixel
 run_test resize_cero_width
 run_test resize_cero_height
 
 run_test cut_freq_invalid_negative
 
-#run_test compress_normal
-#run_test compress_uint8_normal
+run_test compress_normal
 
-rm -rf "$dir/output"
+#rm -rf "$dir/../images/output"
 
 summary

@@ -9,14 +9,8 @@ namespace imgaos {
   template <typename T>
   std::vector<uint8_t> AOS::compress_generic() const {
     auto pixel_data = std::get<std::vector<common::pixel<T>>>(data);
-    std::unordered_map<common::pixel<T>, std::pair<size_t, std::forward_list<size_t>>,
-                       common::PixelHash<T>>
-        freq;
-    freq.reserve(pixel_data.size() / 2);
-    for (size_t i = 0; i < pixel_data.size(); i++) {
-      freq[pixel_data[i]].first++;
-      freq[pixel_data[i]].second.push_front(i);
-    }
+    std::unordered_map<common::pixel<T>, std::vector<size_t>, common::PixelHash<T>> freq;
+    for (size_t i = 0; i < pixel_data.size(); i++) { freq[pixel_data[i]].push_back(i); }
     size_t const table_size = freq.size() * 3 * static_cast<size_t>(type);
     size_t pixel_byte_size  = 0;
     if (freq.size() < UINT8_MAX) {
@@ -39,7 +33,7 @@ namespace imgaos {
     size_t table_index = 0;
     for (auto const & [pixel, freqs] : freq) {
       addPixelToTable<T>(pixel, binary, index);
-      for (auto const & position : freqs.second) {
+      for (auto const & position : freqs) {
         // no estoy seguro de que esto funcione :P
         std::memcpy(&binary[header.size() + table_size + (position * pixel_byte_size)],
                     &table_index, pixel_byte_size);

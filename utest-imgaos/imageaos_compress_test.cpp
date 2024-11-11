@@ -52,9 +52,9 @@ namespace imgaos {
 
     std::string const expected_str = {'C',    '6',    ' ',    '2',    ' ',    '2',    ' ',
                                       '2',    '5',    '6',    ' ',    '3',    '\n',   '\x01',
-                                      '\x01', '\x01', '\x01', '\x01', '\x01', '\x01', '\x01',
-                                      '\x01', '\x02', '\x01', '\x01', '\x30', '\x30', '\x30',
-                                      '\x30', '\x30', '\x30', '\x00', '\x02', '\x02', '\x01'};
+                                      '\x01', '\x01', '\x02', '\x01', '\x01', '\x30', '\x30',
+                                      '\x30', '\x30', '\x30', '\x30', '\x01', '\x01', '\x01',
+                                      '\x01', '\x01', '\x01', '\x02', '\x01', '\x01', '\x00'};
     std::vector<std::uint8_t> const expected(expected_str.begin(), expected_str.end());
 
     ASSERT_EQ(expected, binary);

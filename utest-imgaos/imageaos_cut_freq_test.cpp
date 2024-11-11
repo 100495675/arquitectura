@@ -11,6 +11,7 @@
 // NOLINTBEGIN(modernize-type-traits)
 // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
+// NOLINTBEGIN(readability-magic-numbers)
 namespace imgaos {
 
   TEST(cut_freq, normal) {
@@ -41,8 +42,64 @@ namespace imgaos {
     ASSERT_EQ(expected, binary);
   }
 
+  TEST(cut_freq, negativeFreq) {
+    std::string const inputs_str = "P6\n2 2\n255\n\x01\x02\x01\x30\x30\x30\x30\x30\x30\x01\x01\x01";
+    std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
+
+    AOS img(inputs);
+
+    try {
+      img.cut_freq(-1);
+      FAIL() << "Expected std::invalid_argument";
+    } catch (std::invalid_argument const & ia) {
+      ASSERT_EQ("Invalid cutfreq", std::string(ia.what()));
+    }
+  }
+
+  TEST(cut_freq, zeroFreq) {
+    std::string const inputs_str = "P6\n2 2\n255\n\x01\x02\x01\x30\x30\x30\x30\x30\x30\x01\x01\x01";
+    std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
+
+    AOS img(inputs);
+
+    try {
+      img.cut_freq(0);
+      FAIL() << "Expected std::invalid_argument";
+    } catch (std::invalid_argument const & ia) {
+      ASSERT_EQ("Invalid cutfreq", std::string(ia.what()));
+    }
+  }
+
+  TEST(cut_freq, highFreq) {
+    std::string const inputs_str = "P6\n2 2\n255\n\x01\x02\x01\x30\x30\x30\x30\x30\x30\x01\x01\x01";
+    std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
+
+    AOS img(inputs);
+
+    try {
+      img.cut_freq(10);
+      FAIL() << "Expected std::invalid_argument";
+    } catch (std::invalid_argument const & ia) {
+      ASSERT_EQ("Invalid cutfreq", std::string(ia.what()));
+    }
+  }
+
+  TEST(cut_freq, singleColorImage) {
+    std::string const inputs_str = "P6\n2 2\n255\n\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01";
+    std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
+
+    AOS img(inputs);
+
+    try {
+      img.cut_freq(1);
+      FAIL() << "Expected std::invalid_argument";
+    } catch (std::invalid_argument const & ia) {
+      ASSERT_EQ("Invalid cutfreq", std::string(ia.what()));
+    }
+  }
 }  // namespace imgaos
 
+// NOLINTEND(readability-magic-numbers)
 // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
 // NOLINTEND(cppcoreguidelines-avoid-magic-numbers)
 // NOLINTEND(modernize-type-traits)

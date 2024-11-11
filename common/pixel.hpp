@@ -36,9 +36,9 @@ namespace common {
   template <typename T>
   void pixel<T>::write_to_binary(std::vector<uint8_t> & binary) const {
     if constexpr (std::is_same_v<T, uint8_t>) {
-      binary.push_back(static_cast<uint8_t>(red));
-      binary.push_back(static_cast<uint8_t>(green));
-      binary.push_back(static_cast<uint8_t>(blue));
+      binary.push_back(red);
+      binary.push_back(green);
+      binary.push_back(blue);
     }
 
     else if constexpr (std::is_same_v<T, uint16_t>) {

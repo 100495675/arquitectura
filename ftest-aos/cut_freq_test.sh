@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cut_freq_invalid_negative() {
-    local INPUT_FILE="$photo.ppm"
+    local INPUT_FILE="photo.ppm"
     local OUTPUT_FILE="out.ppm"
     local OPERATION="cutfreq"
     local FREQUENCY="-1"

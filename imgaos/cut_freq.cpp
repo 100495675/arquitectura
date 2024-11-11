@@ -16,7 +16,7 @@
 namespace imgaos {
 
   void AOS::cut_freq(int new_freq) {
-    if (new_freq < 0) { throw std::invalid_argument("Invalid cutfreq"); }
+    if (new_freq <= 0) { throw std::invalid_argument("Invalid cutfreq"); }
     if (type == Type::UINT8) {
       cut_freq_generic<uint8_t>(new_freq);
     } else if (type == Type::UINT16) {

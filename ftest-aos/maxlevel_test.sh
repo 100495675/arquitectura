@@ -2,7 +2,7 @@
 
 max_level_normal_uint8_1() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/maxlevel-deer-small.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/maxlevel-deer-small.ppm"
     local OPERATION="maxlevel"
     local LEVEL="255"
     local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"
@@ -14,7 +14,7 @@ max_level_normal_uint8_1() {
 
 max_level_normal_uint8_2() {
     local INPUT_FILE="$2/../images/input/lake-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/maxlevel-lake-small-255.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/maxlevel-lake-small-255.ppm"
     local OPERATION="maxlevel"
     local LEVEL="255"
     local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"
@@ -26,7 +26,7 @@ max_level_normal_uint8_2() {
 
 max_level_normal_uint16_1() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/maxlevel-deer-small-65535.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/maxlevel-deer-small-65535.ppm"
     local OPERATION="maxlevel"
     local LEVEL="65535"
     local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"
@@ -38,7 +38,7 @@ max_level_normal_uint16_1() {
 
 max_level_normal_uint16_2() {
     local INPUT_FILE="$2/../images/input/lake-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/maxlevel-lake-small-65535.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/maxlevel-lake-small-65535.ppm"
     local OPERATION="maxlevel"
     local LEVEL="65535"
     local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"
@@ -110,7 +110,7 @@ maxlevel_string() {
 
 maxlevel_limite() {
     local INPUT_FILE="$2/../images/input/image-large.ppm"
-    local OUTPUT_FILE="$2/../images/output/image-maxlevel-65536.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/image-maxlevel-65536.ppm"
     local OPERATION="maxlevel"
     local LEVEL="65536"
     local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $LEVEL"

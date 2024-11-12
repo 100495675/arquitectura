@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir=$(dirname $0)
-mkdir -p "$dir/../images/output"
+mkdir -p "$dir/../images/aos-output"
 
 source $dir/test_utils.sh
 source $dir/args_test.sh
@@ -35,14 +35,14 @@ run_test maxlevel_zero
 # los comentados son los que no funcionan, la imagen de referencia que nos dan no es correcta
 
 # elegir 1 o 2, que si no se tarda la vida
-#run_test resize_normal_1
-#run_test resize_normal_2
-#run_test resize_normal_3
-#run_test resize_normal_4
-#run_test resize_normal_5
-#run_test resize_normal_6
-#run_test resize_normal_7
-#run_test resize_normal_8
+run_test resize_normal_1
+run_test resize_normal_2
+run_test resize_normal_3
+run_test resize_normal_4
+run_test resize_normal_5
+run_test resize_normal_6
+run_test resize_normal_7
+run_test resize_normal_8
 run_test resize_invalid_width
 run_test resize_invalid_height
 run_test resize_missing_file
@@ -51,16 +51,16 @@ run_test resize_string_height
 run_test resize_cero_width
 run_test resize_cero_height
 
-#run_test cut_freq_normal_1
-#run_test cut_freq_normal_2
+run_test cut_freq_normal_1
+run_test cut_freq_normal_2
 run_test cut_freq_zero
 run_test cut_freq_invalid_negative
 run_test cut_freq_demasiados_colores
 run_test cut_freq_string_value
 
-#run_test compress_normal_1
-#run_test compress_normal_2
+run_test compress_normal_1
+run_test compress_normal_2
 
-rm -rf "$dir/../images/output"
+#rm -rf "$dir/../images/aos-output"
 
 summary

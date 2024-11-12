@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dir=$(dirname $0)
-mkdir -p "$dir/../images/output"
+mkdir -p "$dir/../images/soa-output"
 
 source $dir/test_utils.sh
 source $dir/args_test.sh
@@ -61,6 +61,6 @@ run_test cut_freq_string_value
 #run_test compress_normal_1
 #run_test compress_normal_2
 
-rm -rf "$dir/../images/output"
+rm -rf "$dir/../images/soa-output"
 
 summary

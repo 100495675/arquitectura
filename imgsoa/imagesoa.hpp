@@ -7,13 +7,18 @@
 #include <cstdint>
 #include <cstring>
 #include <forward_list>
+#include <gtest/gtest_prod.h>
 #include <string>
+#include <unordered_map>
 #include <variant>
 #include <vector>
 
 namespace imgsoa {
 
   class SOA {
+      FRIEND_TEST(imgsoa, normal_uint8);
+      FRIEND_TEST(imgsoa, normal_uint16);
+
     private:
       int width    = 0;
       int height   = 0;
@@ -47,14 +52,22 @@ namespace imgsoa {
       void sort_first_n(std::vector<std::pair<common::pixel<T>, std::vector<size_t>>> & freq_vector,
                         int number);
       template <typename T>
+      std::vector<std::pair<common::pixel<T>, std::vector<size_t>>> compress_sort(
+          std::unordered_map<common::pixel<T>, std::vector<size_t>, common::PixelHash<T>> & freq)
+          const;
+      template <typename T>
       void addPixelToTable(common::pixel<T> const & pixel, std::vector<uint8_t> & binary,
                            size_t & index) const;
+      [[nodiscard]] static size_t calculatePixelByteSize(size_t freq_vector_size);
+      template <typename T>
+      [[nodiscard]] std::vector<uint8_t> compress_generic() const;
 
     public:
       void max_level(int level);
       void resize(int width, int height);
       void cut_freq(int freq);
-      //[[nodiscard]] std::vector<uint8_t> compress() const;
+      [[nodiscard]] std::vector<uint8_t> compress() const;
+
       SOA(std::vector<uint8_t> const & binary);
       [[nodiscard]] std::vector<uint8_t> toBinary() const;
 
@@ -63,6 +76,26 @@ namespace imgsoa {
       [[nodiscard]] int getMaxLevel() const;
   };
 
+  // Implementation
+  template <typename T>
+  void SOA::addPixelToTable(common::pixel<T> const & pixel, std::vector<uint8_t> & binary,
+                            size_t & index) const {
+    if (std::is_same_v<T, uint8_t>) {
+      binary[index++] = static_cast<uint8_t>(pixel.getR());
+      binary[index++] = static_cast<uint8_t>(pixel.getG());
+      binary[index++] = static_cast<uint8_t>(pixel.getB());
+    } else {
+      uint16_t const red   = pixel.getR();
+      uint16_t const green = pixel.getG();
+      uint16_t const blue  = pixel.getB();
+      binary[index++]      = static_cast<uint8_t>(red >> UINT8_WIDTH);
+      binary[index++]      = static_cast<uint8_t>(red & UINT8_MAX);
+      binary[index++]      = static_cast<uint8_t>(green >> UINT8_WIDTH);
+      binary[index++]      = static_cast<uint8_t>(green & UINT8_MAX);
+      binary[index++]      = static_cast<uint8_t>(blue >> UINT8_WIDTH);
+      binary[index++]      = static_cast<uint8_t>(blue & UINT8_MAX);
+    }
+  }
 }  // namespace imgsoa
 
 #endif

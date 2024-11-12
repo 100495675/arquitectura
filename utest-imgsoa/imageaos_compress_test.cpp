@@ -1,4 +1,4 @@
-#include "../imgaos/imageaos.hpp"
+#include "../imgsoa/imagesoa.hpp"
 
 #include <cstdint>
 #include <gtest/gtest.h>
@@ -11,7 +11,7 @@
 // NOLINTBEGIN(modernize-type-traits)
 // NOLINTBEGIN(cppcoreguidelines-avoid-magic-numbers)
 // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
-namespace imgaos {
+namespace imgsoa {
 
   TEST(compress, uint8_menos_de_256_colores) {
     std::string const inputs_str = "P6\n2 "
@@ -23,7 +23,7 @@ namespace imgaos {
                                    "\x30\x30\x30\x30\x30\x30\x30\x01\x01\x01";
     std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
 
-    const AOS img(inputs);
+    const SOA img(inputs);
 
     std::vector<uint8_t> const binary = img.compress();
 
@@ -46,7 +46,7 @@ namespace imgaos {
                                    "\x01\x01\x01\x02\x01\x01";
     std::vector<std::uint8_t> const inputs(inputs_str.begin(), inputs_str.end());
 
-    const AOS img(inputs);
+    const SOA img(inputs);
 
     std::vector<uint8_t> const binary = img.compress();
 
@@ -60,7 +60,7 @@ namespace imgaos {
     ASSERT_EQ(expected, binary);
   }
 
-}  // namespace imgaos
+}  // namespace imgsoa
 
 // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast,-warnings-as-errors)
 // NOLINTEND(cppcoreguidelines-avoid-magic-numbers)

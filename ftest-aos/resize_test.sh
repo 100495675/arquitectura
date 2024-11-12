@@ -2,7 +2,7 @@
 
 resize_normal_1() {
     local INPUT_FILE="$2/../images/input/deer-large.ppm"
-    local OUTPUT_FILE="$2/../images/output/resize-deer-large-1000.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/resize-deer-large-1000.ppm"
     local OPERATION="resize"
     local WIDTH="1000"
     local HEIGHT="1000"
@@ -15,7 +15,7 @@ resize_normal_1() {
 
 resize_normal_2() {
     local INPUT_FILE="$2/../images/input/deer-large.ppm"
-    local OUTPUT_FILE="$2/../images/output/resize-deer-large-100.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/resize-deer-large-100.ppm"
     local OPERATION="resize"
     local WIDTH="100"
     local HEIGHT="100"
@@ -28,7 +28,7 @@ resize_normal_2() {
 
 resize_normal_3() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/resize-deer-small-100.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/resize-deer-small-100.ppm"
     local OPERATION="resize"
     local WIDTH="100"
     local HEIGHT="100"
@@ -41,7 +41,7 @@ resize_normal_3() {
 
 resize_normal_4() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/resize-deer-small-1000.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/resize-deer-small-1000.ppm"
     local OPERATION="resize"
     local WIDTH="1000"
     local HEIGHT="1000"
@@ -54,7 +54,7 @@ resize_normal_4() {
 
 resize_normal_5() {
     local INPUT_FILE="$2/../images/input/lake-large.ppm"
-    local OUTPUT_FILE="$2/../images/output/resize-lake-large-1000.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/resize-lake-large-1000.ppm"
     local OPERATION="resize"
     local WIDTH="1000"
     local HEIGHT="1000"
@@ -67,7 +67,7 @@ resize_normal_5() {
 
 resize_normal_6() {
     local INPUT_FILE="$2/../images/input/lake-large.ppm"
-    local OUTPUT_FILE="$2/../images/output/resize-lake-large-100.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/resize-lake-large-100.ppm"
     local OPERATION="resize"
     local WIDTH="100"
     local HEIGHT="100"
@@ -80,7 +80,7 @@ resize_normal_6() {
 
 resize_normal_7() {
     local INPUT_FILE="$2/../images/input/lake-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/resize-lake-small-100.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/resize-lake-small-100.ppm"
     local OPERATION="resize"
     local WIDTH="100"
     local HEIGHT="100"
@@ -93,7 +93,7 @@ resize_normal_7() {
 
 resize_normal_8() {
     local INPUT_FILE="$2/../images/input/lake-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/resize-lake-small-1000.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/resize-lake-small-1000.ppm"
     local OPERATION="resize"
     local WIDTH="1000"
     local HEIGHT="1000"
@@ -106,7 +106,7 @@ resize_normal_8() {
 
 resize_invalid_width() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/deer-small-resize-invalid.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/deer-small-resize-invalid.ppm"
     local OPERATION="resize"
     local WIDTH="-100"
     local HEIGHT="200"
@@ -119,7 +119,7 @@ resize_invalid_width() {
 
 resize_invalid_height() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/deer-small-resize-invalid.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/deer-small-resize-invalid.ppm"
     local OPERATION="resize"
     local WIDTH="100"
     local HEIGHT="-200"
@@ -132,7 +132,7 @@ resize_invalid_height() {
 
 resize_missing_file() {
     local INPUT_FILE="$2/../images/input/nonexistent.ppm"
-    local OUTPUT_FILE="$2/../images/output/nonexistent-resize.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/nonexistent-resize.ppm"
     local OPERATION="resize"
     local WIDTH="100"
     local HEIGHT="200"
@@ -145,7 +145,7 @@ resize_missing_file() {
 
 resize_string_width() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/deer-small-resize-invalid.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/deer-small-resize-invalid.ppm"
     local OPERATION="resize"
     local WIDTH="abc"
     local HEIGHT="200"
@@ -158,7 +158,7 @@ resize_string_width() {
 
 resize_string_height() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/deer-small-resize-invalid.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/deer-small-resize-invalid.ppm"
     local OPERATION="resize"
     local WIDTH="100"
     local HEIGHT="xyz"
@@ -171,7 +171,7 @@ resize_string_height() {
 
 resize_cero_width() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/deer-small-resize-zero-width.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/deer-small-resize-zero-width.ppm"
     local OPERATION="resize"
     local WIDTH="0"
     local HEIGHT="100"
@@ -184,7 +184,7 @@ resize_cero_width() {
 
 resize_cero_height() {
     local INPUT_FILE="$2/../images/input/deer-small.ppm"
-    local OUTPUT_FILE="$2/../images/output/deer-small-resize-zero-height.ppm"
+    local OUTPUT_FILE="$2/../images/aos-output/deer-small-resize-zero-height.ppm"
     local OPERATION="resize"
     local WIDTH="100"
     local HEIGHT="0"

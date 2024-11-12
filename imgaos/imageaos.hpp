@@ -49,6 +49,7 @@ namespace imgaos {
       template <typename T>
       void addPixelToTable(common::pixel<T> const & pixel, std::vector<uint8_t> & binary,
                            size_t & index) const;
+      [[nodiscard]] static size_t calculatePixelByteSize(size_t freq_vector_size);
       template <typename T>
       [[nodiscard]] std::vector<uint8_t> compress_generic() const;
 

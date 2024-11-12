@@ -1,7 +1,7 @@
 #!/bin/bash
 
 args_0() {
-    local COMMAND="../imtool-aos/imtool-aos"
+    local COMMAND="../imtool-soa/imtool-soa"
 
     local EXPECTED_ERROR="Error: Invalid number of arguments: 0"
 
@@ -9,7 +9,7 @@ args_0() {
 }
 
 args_1() {
-    local COMMAND="../imtool-aos/imtool-aos photo.ppm"
+    local COMMAND="../imtool-soa/imtool-soa photo.ppm"
 
     local EXPECTED_ERROR="Error: Invalid number of arguments: 1"
 
@@ -17,7 +17,7 @@ args_1() {
 }
 
 args_2() {
-    local COMMAND="../imtool-aos/imtool-aos photo.ppm out.ppm"
+    local COMMAND="../imtool-soa/imtool-soa photo.ppm out.ppm"
 
     local EXPECTED_ERROR="Error: Invalid number of arguments: 2"
 
@@ -25,7 +25,7 @@ args_2() {
 }
 
 args_invalid_operation() {
-    local COMMAND="../imtool-aos/imtool-aos photo.ppm out.ppm copy"
+    local COMMAND="../imtool-soa/imtool-soa photo.ppm out.ppm copy"
 
     local EXPECTED_ERROR="Error: Invalid option: copy"
 

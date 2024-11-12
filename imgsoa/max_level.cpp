@@ -36,8 +36,7 @@ namespace imgsoa {
         auto new_r = std::get<std::vector<common::Red<T>>>(red)[i].getValue() * level / maxlevel;
         auto new_g =
             std::get<std::vector<common::Green<T>>>(green)[i].getValue() * level / maxlevel;
-        auto new_b =
-            std::get<std::vector<common::Green<T>>>(green)[i].getValue() * level / maxlevel;
+        auto new_b = std::get<std::vector<common::Blue<T>>>(blue)[i].getValue() * level / maxlevel;
         std::get<std::vector<common::Red<T>>>(red)[i]     = common::Red<T>(static_cast<T>(new_r));
         std::get<std::vector<common::Green<T>>>(green)[i] = common::Green<T>(static_cast<T>(new_g));
         std::get<std::vector<common::Blue<T>>>(blue)[i]   = common::Blue<T>(static_cast<T>(new_b));
@@ -55,7 +54,7 @@ namespace imgsoa {
                      level / maxlevel;
         auto new_g = static_cast<U>(std::get<std::vector<common::Green<T>>>(green)[i].getValue()) *
                      level / maxlevel;
-        auto new_b = static_cast<U>(std::get<std::vector<common::Green<T>>>(green)[i].getValue()) *
+        auto new_b = static_cast<U>(std::get<std::vector<common::Blue<T>>>(blue)[i].getValue()) *
                      level / maxlevel;
         new_red_vector.push_back(common::Red<U>(static_cast<U>(new_r)));
         new_green_vector.push_back(common::Green<U>(static_cast<U>(new_g)));

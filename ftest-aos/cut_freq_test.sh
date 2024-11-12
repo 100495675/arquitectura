@@ -1,10 +1,22 @@
 #!/bin/bash
 
-cut_freq_normal() {
+cut_freq_normal_1() {
     local INPUT_FILE="$2/../images/input/lake-large.ppm"
     local OUTPUT_FILE="$2/../images/output/lake-large-100k.ppm"
     local OPERATION="cutfreq"
     local FREQ="100000"
+    local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $FREQ"
+
+    local EXPECTED_FILE="$2/../images/expected/cutfreq/lake-large-100K.ppm"
+
+    test_file "$1" "$COMMAND" "$EXPECTED_FILE" "$OUTPUT_FILE"
+}
+
+cut_freq_normal_2() {
+    local INPUT_FILE="$2/../images/input/lake-large.ppm"
+    local OUTPUT_FILE="$2/../images/output/lake-large-100k.ppm"
+    local OPERATION="cutfreq"
+    local FREQ="162000"
     local COMMAND="../imtool-aos/imtool-aos $INPUT_FILE $OUTPUT_FILE $OPERATION $FREQ"
 
     local EXPECTED_FILE="$2/../images/expected/cutfreq/lake-large-100K.ppm"

@@ -12,19 +12,22 @@ namespace imgsoa {
     if (new_max_level <= 0 || new_max_level >= MAX_MAXLEVEL) {
       throw std::invalid_argument("Invalid maxlevel");
     }
-    if (new_max_level <= UINT8_MAX) {
-      if (maxlevel <= UINT8_MAX) {
-        max_level_generic<uint8_t, uint8_t>(new_max_level);
-      } else {
-        max_level_generic<uint16_t, uint8_t>(new_max_level);
-      }
+    if (new_max_level == maxlevel) { return; }
+
+    bool const new_level_is_uint8     = new_max_level <= UINT8_MAX;
+    bool const current_level_is_uint8 = maxlevel <= UINT8_MAX;
+
+    if (current_level_is_uint8 && new_level_is_uint8) {
+      max_level_generic<uint8_t, uint8_t>(new_max_level);
       type = Type::UINT8;
+    } else if (!current_level_is_uint8 && new_level_is_uint8) {
+      max_level_generic<uint16_t, uint8_t>(new_max_level);
+      type = Type::UINT8;
+    } else if (current_level_is_uint8 && !new_level_is_uint8) {
+      max_level_generic<uint8_t, uint16_t>(new_max_level);
+      type = Type::UINT16;
     } else {
-      if (maxlevel <= UINT8_MAX) {
-        max_level_generic<uint8_t, uint16_t>(new_max_level);
-      } else {
-        max_level_generic<uint16_t, uint16_t>(new_max_level);
-      }
+      max_level_generic<uint16_t, uint16_t>(new_max_level);
       type = Type::UINT16;
     }
   }

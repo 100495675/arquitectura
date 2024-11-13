@@ -58,6 +58,6 @@ run_test cut_freq_string_value
 run_test compress_normal_1
 run_test compress_normal_2
 
-#rm -rf "$dir/../images/soa-output"
+rm -rf "$dir/../images/soa-output"
 
 summary

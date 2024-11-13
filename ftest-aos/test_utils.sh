@@ -92,8 +92,8 @@ compare_files() {
         echo -e "\033[0;31mTest '$1' failed.\033[0m"
         echo "______________________"
         echo "Number of different bytes: $diff"
-        echo "$diff_percentage"
-        echo "Difference percentage: $((diff_percentage / 100)).$((diff_percentage % 100))%"
+        local decimal=$(printf "%02d" $((diff_percentage % 100)))
+        echo "Difference percentage: $((diff_percentage / 100)).$decimal%"
         echo "______________________"
         return 1
     fi

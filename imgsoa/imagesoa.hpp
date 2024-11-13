@@ -42,10 +42,9 @@ namespace imgsoa {
       Color calculate_color(std::vector<Color> const & old_vector_data, common::Size old_size,
                             int new_x, int new_y);
 
-      template <typename Color>
-      Color interpolate_color(std::tuple<float, float> const & positions, float pos,
-                              Color const & color_1, Color const & color_2);
-
+      template <typename T, typename U>
+      U interpolate_color(std::tuple<float, float> const & positions, float pos, T const & value_1,
+                          T const & value_2);
       template <typename T>
       void cut_freq_generic(int number);
       template <typename T>

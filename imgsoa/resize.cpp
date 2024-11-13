@@ -82,19 +82,20 @@ namespace imgsoa {
     Color const color_22 =
         old_vector_data[(static_cast<size_t>(y_2) * width) + static_cast<size_t>(x_2)];
 
-    auto const color_1 = interpolate_color(std::make_tuple(x_1, x_2), old_x, color_11, color_21);
-    auto const color_2 = interpolate_color(std::make_tuple(x_1, x_2), old_x, color_12, color_22);
-    return interpolate_color(std::make_tuple(y_1, y_2), old_y, color_1, color_2);
+    auto const color_1 = interpolate_color<typename Color::value_type, float>(
+        std::make_tuple(x_1, x_2), old_x, color_11.getValue(), color_21.getValue());
+    auto const color_2 = interpolate_color<typename Color::value_type, float>(
+        std::make_tuple(x_1, x_2), old_x, color_12.getValue(), color_22.getValue());
+    return Color(interpolate_color<float, typename Color::value_type>(std::make_tuple(y_1, y_2),
+                                                                      old_y, color_1, color_2));
   }
 
-  template <typename Color>
-  Color SOA::interpolate_color(std::tuple<float, float> const & positions, float pos,
-                               Color const & color_1, Color const & color_2) {
+  template <typename T, typename U>
+  U SOA::interpolate_color(std::tuple<float, float> const & positions, float pos, T const & value_1,
+                           T const & value_2) {
     auto const [pos1, pos2] = positions;
     auto const delta        = pos2 - pos1;
-    if (delta == 0) { return color_1; }
-    auto const valor = static_cast<typename Color::value_type>(
-        ((pos2 - pos) / delta * color_1.getValue()) + ((pos - pos1) / delta * color_2.getValue()));
-    return Color(valor);
+    if (delta == 0) { return static_cast<U>(value_1); }
+    return static_cast<U>(((pos2 - pos) * value_1 + (pos - pos1) * value_2) / delta);
   }
 }  // namespace imgsoa

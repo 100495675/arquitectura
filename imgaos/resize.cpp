@@ -64,24 +64,31 @@ namespace imgaos {
     common::pixel<T> const pixel_22 =
         old_vector_data[(static_cast<size_t>(y_2) * width) + static_cast<size_t>(x_2)];
 
-    auto const pixel_1 = interpolate_pixel(std::make_tuple(x_1, x_2), old_x, pixel_11, pixel_21);
-    auto const pixel_2 = interpolate_pixel(std::make_tuple(x_1, x_2), old_x, pixel_12, pixel_22);
-    return interpolate_pixel(std::make_tuple(y_1, y_2), old_y, pixel_1, pixel_2);
+    auto const pixel_1 =
+        interpolate_pixel<T, float>(std::make_tuple(x_1, x_2), old_x, pixel_11, pixel_21);
+    auto const pixel_2 =
+        interpolate_pixel<T, float>(std::make_tuple(x_1, x_2), old_x, pixel_12, pixel_22);
+    return interpolate_pixel<float, T>(std::make_tuple(y_1, y_2), old_y, pixel_1, pixel_2);
   }
 
-  template <typename T>
-  common::pixel<T> AOS::interpolate_pixel(std::tuple<float, float> const & positions, float pos,
+  template <typename T, typename U>
+  common::pixel<U> AOS::interpolate_pixel(std::tuple<float, float> const & positions, float pos,
                                           common::pixel<T> const & pixel_1,
                                           common::pixel<T> const & pixel_2) {
     auto const [pos1, pos2] = positions;
     auto const delta        = pos2 - pos1;
-    if (delta == 0) { return pixel_1; }
-    auto const red   = common::Red(static_cast<T>(((pos2 - pos) / delta * pixel_1.getR()) +
-                                                  ((pos - pos1) / delta * pixel_2.getR())));
-    auto const green = common::Green(static_cast<T>(((pos2 - pos) / delta * pixel_1.getG()) +
-                                                    ((pos - pos1) / delta * pixel_2.getG())));
-    auto const blue  = common::Blue(static_cast<T>(((pos2 - pos) / delta * pixel_1.getB()) +
-                                                   ((pos - pos1) / delta * pixel_2.getB())));
-    return common::pixel<T>(red, green, blue);
+    if (delta == 0) {
+      return common::pixel<U>(common::Red(static_cast<U>(pixel_1.getR())),
+                              common::Green(static_cast<U>(pixel_1.getG())),
+                              common::Blue(static_cast<U>(pixel_1.getB())));
+    }
+
+    auto const red   = common::Red(static_cast<U>(
+        (((pos2 - pos) * pixel_1.getR()) + ((pos - pos1) * pixel_2.getR())) / delta));
+    auto const green = common::Green(static_cast<U>(
+        (((pos2 - pos) * pixel_1.getG()) + ((pos - pos1) * pixel_2.getG())) / delta));
+    auto const blue  = common::Blue(static_cast<U>(
+        (((pos2 - pos) * pixel_1.getB()) + ((pos - pos1) * pixel_2.getB())) / delta));
+    return common::pixel<U>(red, green, blue);
   }
 }  // namespace imgaos

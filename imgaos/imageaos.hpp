@@ -37,8 +37,8 @@ namespace imgaos {
       template <typename T>
       common::pixel<T> calculate_pixel(std::vector<common::pixel<T>> const & old_vector_data,
                                        common::Size old_size, int new_x, int new_y);
-      template <typename T>
-      common::pixel<T> interpolate_pixel(std::tuple<float, float> const & positions, float pos,
+      template <typename T, typename U>
+      common::pixel<U> interpolate_pixel(std::tuple<float, float> const & positions, float pos,
                                          common::pixel<T> const & pixel_1,
                                          common::pixel<T> const & pixel_2);
       template <typename T>

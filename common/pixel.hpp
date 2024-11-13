@@ -2,6 +2,7 @@
 #define PIXEL_HPP
 #include "colors.hpp"
 
+#include <cstddef>
 #include <cstdint>
 #include <vector>
 

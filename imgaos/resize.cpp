@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <stdexcept>
+#include <tuple>
 #include <vector>
 
 namespace imgaos {

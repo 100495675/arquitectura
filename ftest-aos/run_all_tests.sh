@@ -32,9 +32,6 @@ run_test maxlevel_string
 run_test maxlevel_limite
 run_test maxlevel_zero
 
-# los comentados son los que no funcionan, la imagen de referencia que nos dan no es correcta
-
-# elegir 1 o 2, que si no se tarda la vida
 run_test resize_normal_1
 run_test resize_normal_2
 run_test resize_normal_3

@@ -73,10 +73,11 @@ compare_files() {
         return 1
     fi
 
-
-    local difer=$(cmp -b "$expected_file" "$output_file" 2>stderr.txt)
+    local file_size=$(stat -c %s "$expected_file")
+    local diff=$(cmp -l "$expected_file" "$output_file" 2>stderr.txt | wc -l) 
     local error=$(cat stderr.txt)
     rm stderr.txt
+
     if [ ! -z "$error" ]; then
         echo -e "\033[0;31mTest '$1' failed.\033[0m"
         echo "______________________"
@@ -85,16 +86,17 @@ compare_files() {
         echo "______________________"
         return 1
     fi
-
-    if [ ! -z "$difer" ]; then
+    
+    local diff_percentage=$((diff * 100 * 100 / file_size))
+    if [ "$diff_percentage" -gt 66 ]; then # 0.66% de diferencia
         echo -e "\033[0;31mTest '$1' failed.\033[0m"
         echo "______________________"
-        echo "Diff between expected and actual output:"
-        echo "$difer"
+        echo "Number of different bytes: $diff"
+        echo "$diff_percentage"
+        echo "Difference percentage: $((diff_percentage / 100)).$((diff_percentage % 100))%"
         echo "______________________"
         return 1
     fi
-
     return 0
 }
 

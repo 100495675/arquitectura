@@ -45,11 +45,10 @@ namespace {
     BinaryIO::write_binary(image.toBinary(), args.getOutput());
   }
 
-  /*
-      void compress(InputArgs const & args) {
-        const SOA image(BinaryIO::read_binary(args.getInput()));
-        BinaryIO::write_binary(image.compress(), args.getOutput());
-      }*/
+  void compress(InputArgs const & args) {
+    const SOA image(BinaryIO::read_binary(args.getInput()));
+    BinaryIO::write_binary(image.compress(), args.getOutput());
+  }
 }  // namespace
 
 int main(int argc, char const * argv[]) {
@@ -69,12 +68,9 @@ int main(int argc, char const * argv[]) {
       case InputArgs::Command::CutFreq:
         cut_freq(args);
         break;
-        /*case InputArgs::Command::Compress:
-          compress(args);
-          break;
-      }*/
-      default:
-        std::cerr << "Aun no he programado eso :P\n";
+      case InputArgs::Command::Compress:
+        compress(args);
+        break;
     }
 
     return 0;

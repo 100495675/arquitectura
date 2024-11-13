@@ -71,8 +71,9 @@ namespace common {
 
   template <typename T>
   size_t PixelHash<T>::operator()(pixel<T> const & pixel) const {
-    return std::hash<T>()(pixel.getR()) ^ (std::hash<T>()(pixel.getG()) << 1) ^
-           (std::hash<T>()(pixel.getB()) << 2);
+    return std::hash<size_t>()(static_cast<size_t>(pixel.getR()) *
+                               static_cast<size_t>(pixel.getG()) *
+                               static_cast<size_t>(pixel.getB()));
   }
 
 }  // namespace common

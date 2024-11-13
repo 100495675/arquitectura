@@ -15,6 +15,7 @@ namespace common {
     uint8_t const redUInt8Value = 100;
     Red<uint8_t> const redUInt8(redUInt8Value);
 
+    EXPECT_TRUE((std::is_same_v<decltype(redUInt8.getValue()), uint8_t>) );
     EXPECT_EQ(redUInt8.getValue(), redUInt8Value);
   }
 
@@ -22,6 +23,7 @@ namespace common {
     uint16_t const redUInt16Value = 100;
     Red<uint16_t> const redUInt16(redUInt16Value);
 
+    EXPECT_TRUE((std::is_same_v<decltype(redUInt16.getValue()), uint16_t>) );
     EXPECT_EQ(redUInt16.getValue(), redUInt16Value);
   }
 
@@ -29,6 +31,7 @@ namespace common {
     uint8_t const greenUInt8Value = 150;
     Green<uint8_t> const greenUInt8(greenUInt8Value);
 
+    EXPECT_TRUE((std::is_same_v<decltype(greenUInt8.getValue()), uint8_t>) );
     EXPECT_EQ(greenUInt8.getValue(), greenUInt8Value);
   }
 
@@ -36,6 +39,7 @@ namespace common {
     uint16_t const greenUInt16Value = 150;
     Green<uint16_t> const greenUInt16(greenUInt16Value);
 
+    EXPECT_TRUE((std::is_same_v<decltype(greenUInt16.getValue()), uint16_t>) );
     EXPECT_EQ(greenUInt16.getValue(), greenUInt16Value);
   }
 
@@ -43,6 +47,7 @@ namespace common {
     uint8_t const blueUInt8Value = 200;
     Blue<uint8_t> const blueUInt8(blueUInt8Value);
 
+    EXPECT_TRUE((std::is_same_v<decltype(blueUInt8.getValue()), uint8_t>) );
     EXPECT_EQ(blueUInt8.getValue(), blueUInt8Value);
   }
 
@@ -50,6 +55,7 @@ namespace common {
     uint16_t const blueUInt16Value = 200;
     Blue<uint16_t> const blueUInt16(blueUInt16Value);
 
+    EXPECT_TRUE((std::is_same_v<decltype(blueUInt16.getValue()), uint16_t>) );
     EXPECT_EQ(blueUInt16.getValue(), blueUInt16Value);
   }
 

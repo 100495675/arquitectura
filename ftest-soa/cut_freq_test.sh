@@ -2,7 +2,7 @@
 
 cut_freq_normal_1() {
     local INPUT_FILE="$2/../images/input/lake-large.ppm"
-    local OUTPUT_FILE="$2/../images/soa-output/lake-large-100k.ppm"
+    local OUTPUT_FILE="$2/../images/soa-output/cutfreq-lake-large-100k.ppm"
     local OPERATION="cutfreq"
     local FREQ="100000"
     local COMMAND="../imtool-soa/imtool-soa $INPUT_FILE $OUTPUT_FILE $OPERATION $FREQ"
@@ -14,7 +14,7 @@ cut_freq_normal_1() {
 
 cut_freq_normal_2() {
     local INPUT_FILE="$2/../images/input/lake-large.ppm"
-    local OUTPUT_FILE="$2/../images/soa-output/lake-large-162k.ppm"
+    local OUTPUT_FILE="$2/../images/soa-output/cutfreq-lake-large-162k.ppm"
     local OPERATION="cutfreq"
     local FREQ="162000"
     local COMMAND="../imtool-soa/imtool-soa $INPUT_FILE $OUTPUT_FILE $OPERATION $FREQ"

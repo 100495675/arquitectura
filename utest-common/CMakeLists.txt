@@ -7,6 +7,7 @@ parsebinary_test.cpp
 validatefile_test.cpp
 colors_test.cpp
 sizes_test.cpp
+pixel_test.cpp
 )
 # Library dependencies
 target_link_libraries (utest-common

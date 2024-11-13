@@ -11,21 +11,21 @@
 
 namespace common {
 
-  TEST(AuxTests, Width) {
+  TEST(Sizes, Width) {
     int const widthValue = 10;
     Width const width(widthValue);
 
     EXPECT_EQ(width.getValue(), widthValue);
   }
 
-  TEST(AuxTests, Height) {
+  TEST(Sizes, Height) {
     int const heightValue = 20;
     Height const height(heightValue);
 
     EXPECT_EQ(height.getValue(), heightValue);
   }
 
-  TEST(AuxTests, Size) {
+  TEST(Sizes, Size) {
     int const widthValue  = 10;
     int const heightValue = 20;
 
